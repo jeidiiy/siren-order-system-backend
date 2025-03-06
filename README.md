@@ -54,12 +54,16 @@
 - 주문 상태 확인
   - 대기 중, 만드는 중, 완료
 
+## ERD
+
+![siren-order-system.drawio.png](./images/siren-order-system.drawio.png)
+
 ## 커밋 규칙
 
 ### 커밋 메시지 규칙
 
 ```plain
-type: subject
+#{issue number} - type: subject
 
 body
 ```
@@ -79,6 +83,7 @@ body
 ### 제목
 
 - 제목은 50자를 넘기지 않고, 소문자로 작성하며 마침표를 붙이지 않는다.
+- 프리픽스로 이슈 번호를 작성하여 깃허브에서 관련 사항들을 추적하기 쉽도록 한다.
 - 명령어로 작성한다.
 - 가능한 제목으로 커밋 의도를 알 수 있도록 간결하고 명확하게 작성한다.
 
