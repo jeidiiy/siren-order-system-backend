@@ -54,6 +54,10 @@
 - 주문 상태 확인
   - 대기 중, 만드는 중, 완료
 
+## ERD
+
+![siren-order-system.drawio.png](./images/siren-order-system.drawio.png)
+
 ## 커밋 규칙
 
 ### 커밋 메시지 규칙
