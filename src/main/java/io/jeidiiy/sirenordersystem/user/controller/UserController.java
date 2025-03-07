@@ -1,5 +1,15 @@
 package io.jeidiiy.sirenordersystem.user.controller;
 
+import io.jeidiiy.sirenordersystem.user.dto.UserPostRequestBody;
+import io.jeidiiy.sirenordersystem.user.service.UserService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import io.jeidiiy.sirenordersystem.jwt.model.JwtToken;
 import io.jeidiiy.sirenordersystem.user.domain.dto.UserLoginRequestBody;
 import io.jeidiiy.sirenordersystem.user.service.UserService;
@@ -18,6 +28,10 @@ public class UserController {
 
   private final UserService userService;
 
+  @PostMapping
+  public ResponseEntity<Void> signUp(@RequestBody @Valid UserPostRequestBody userPostRequestBody) {
+    userService.signUp(userPostRequestBody);
+    return ResponseEntity.status(HttpStatus.CREATED).build();
   @GetMapping // TODO: 테스트용으로 만들어 놓은 API, 추후 변경 필요
   public String hello() {
     return "Hello, World!";
