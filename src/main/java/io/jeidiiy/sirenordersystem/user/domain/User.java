@@ -4,21 +4,18 @@ import jakarta.persistence.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-/**
- * 서비스를 이용하는 유저 정보.
- *
- * @author jeidiiy
- */
 @Getter
 @ToString
-@Table(name = "\"users\"")
+@NoArgsConstructor
+@Table(
+    name = "\"users\"",
+    indexes = {@Index(columnList = "username")})
 @Entity
 public class User implements UserDetails {
   @Id
@@ -26,12 +23,16 @@ public class User implements UserDetails {
   private Integer userId;
 
   @Setter
-  @Column(length = 30, nullable = false)
+  @Column(nullable = false)
   private String username;
 
   @Setter
   @Column(length = 100, nullable = false)
   private String password;
+
+  @Setter
+  @Column(length = 6, nullable = false)
+  private String realName;
 
   @Setter
   @Column(length = 6)
@@ -41,13 +42,12 @@ public class User implements UserDetails {
   @Column
   private Role role;
 
-  public static User of(String username, String password, String nickname) {
-    User user = new User();
-    user.setUsername(username);
-    user.setPassword(password);
-    user.setNickname(nickname);
-    user.role = Role.CUSTOMER;
-    return user;
+  @Builder
+  public User(String username, String realName, String password, String nickname) {
+    this.username = username;
+    this.realName = realName;
+    this.password = password;
+    this.nickname = nickname;
   }
 
   @Override
@@ -76,6 +76,7 @@ public class User implements UserDetails {
 
     return Objects.equals(getUsername(), user.getUsername())
         && Objects.equals(getPassword(), user.getPassword())
+        && Objects.equals(getRealName(), user.getRealName())
         && Objects.equals(getNickname(), user.getNickname())
         && getRole() == user.getRole();
   }
@@ -85,7 +86,6 @@ public class User implements UserDetails {
     if (getUserId() != null) {
       return Objects.hash(getUserId());
     }
-
-    return Objects.hash(getUsername(), getPassword(), getNickname(), getRole());
+    return Objects.hash(getUsername(), getPassword(), getRealName(), getNickname(), getRole());
   }
 }
