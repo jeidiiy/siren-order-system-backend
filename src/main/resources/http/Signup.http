@@ -1,0 +1,20 @@
+### 모든 필드에 정상값
+POST http://localhost:8080/api/v1/users
+Content-Type: application/json
+
+{
+  "username": "jeidiiy",
+  "password": "password1234!!",
+  "realname": "정지용",
+  "nickname": "개발자취준생"
+}
+
+### 닉네임만 미입력
+POST http://localhost:8080/api/v1/users
+Content-Type: application/json
+
+{
+  "username": "asd",
+  "password": "password1234!!",
+  "realname": "홍길동"
+}
