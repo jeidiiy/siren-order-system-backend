@@ -32,7 +32,7 @@ public class User implements UserDetails {
 
   @Setter
   @Column(length = 6, nullable = false)
-  private String realName;
+  private String realname;
 
   @Setter
   @Column(length = 6)
@@ -43,11 +43,12 @@ public class User implements UserDetails {
   private Role role;
 
   @Builder
-  public User(String username, String realName, String password, String nickname) {
+  public User(String username, String realname, String password, String nickname) {
     this.username = username;
-    this.realName = realName;
+    this.realname = realname;
     this.password = password;
     this.nickname = nickname;
+    this.role = Role.CUSTOMER; // 기본값으로 고객으로 저장. 관리자는 별도로 관리
   }
 
   @Override
@@ -76,7 +77,7 @@ public class User implements UserDetails {
 
     return Objects.equals(getUsername(), user.getUsername())
         && Objects.equals(getPassword(), user.getPassword())
-        && Objects.equals(getRealName(), user.getRealName())
+        && Objects.equals(getRealname(), user.getRealname())
         && Objects.equals(getNickname(), user.getNickname())
         && getRole() == user.getRole();
   }
@@ -86,6 +87,6 @@ public class User implements UserDetails {
     if (getUserId() != null) {
       return Objects.hash(getUserId());
     }
-    return Objects.hash(getUsername(), getPassword(), getRealName(), getNickname(), getRole());
+    return Objects.hash(getUsername(), getPassword(), getRealname(), getNickname(), getRole());
   }
 }
