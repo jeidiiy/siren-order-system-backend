@@ -1,5 +1,6 @@
 package io.jeidiiy.sirenordersystem.exception;
 
+import io.jeidiiy.sirenordersystem.user.exception.UserAlreadyExistsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authorization.AuthorizationDeniedException;
@@ -12,6 +13,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
   @ExceptionHandler(ClientErrorException.class)
   public ResponseEntity<ErrorResponse> handleClientErrorException(ClientErrorException e) {
+    return new ResponseEntity<>(new ErrorResponse(e.getStatus(), e.getMessage()), e.getStatus());
+  }
+
+  @ExceptionHandler(UserAlreadyExistsException.class)
+  public ResponseEntity<ErrorResponse> handleUserAlreadyExistsException(
+      UserAlreadyExistsException e) {
     return new ResponseEntity<>(new ErrorResponse(e.getStatus(), e.getMessage()), e.getStatus());
   }
 
