@@ -1,0 +1,40 @@
+### 회원정보 가져오기 API
+GET http://localhost:8080/api/v1/users/eren
+Authorization: Bearer
+
+### 회원가입 API - 모든 필드 입력
+POST http://localhost:8080/api/v1/users
+Content-Type: application/json
+
+{
+  "username": "jeidiiy",
+  "password": "password1234!!",
+  "realname": "정지용",
+  "nickname": "개발자취준생"
+}
+
+### 회원가입 API - 닉네임만 미입력
+POST http://localhost:8080/api/v1/users
+Content-Type: application/json
+
+{
+  "username": "asd",
+  "password": "password1234!!",
+  "realname": "홍길동"
+}
+
+### 회원정보 수정 API
+PATCH http://localhost:8080/api/v1/users/aren
+Authorization: Bearer
+Content-Type: application/json
+
+{
+  "nickname": "시조의거인",
+  "password": "password11!!",
+  "realname": "에렌예거",
+  "username": "eren"
+}
+
+### 회원정보 삭제 API
+DELETE http://localhost:8080/api/v1/users/aren
+Authorization: Bearer
