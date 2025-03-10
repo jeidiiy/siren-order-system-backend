@@ -42,7 +42,7 @@ public class UserService implements UserDetailsService {
   }
 
   public void updateUserByUsername(String username, UserPatchRequestBody userPatchRequestBody) {
-    User user = userJpaRepository.findByUsername(username).orElseThrow();
+    User user = getUserByUsername(username);
 
     user.setUsername(userPatchRequestBody.getUsername());
     user.setRealname(userPatchRequestBody.getRealname());
@@ -59,16 +59,12 @@ public class UserService implements UserDetailsService {
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    return userJpaRepository
-        .findByUsername(username)
-        .map(
-            user ->
-                AuthenticationUser.builder()
-                    .username(user.getUsername())
-                    .password(user.getPassword())
-                    .role(user.getRole())
-                    .build())
-        .orElseThrow(() -> new UsernameNotFoundException(username));
+    User user = getUserByUsername(username);
+    return AuthenticationUser.builder()
+        .username(user.getUsername())
+        .password(user.getPassword())
+        .role(user.getRole())
+        .build();
   }
 
   public JwtToken login(UserLoginRequestBody userLoginRequestBody) {
