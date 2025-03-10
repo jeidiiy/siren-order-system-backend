@@ -1,4 +1,4 @@
-package io.jeidiiy.sirenordersystem.user.dto;
+package io.jeidiiy.sirenordersystem.user.domain.dto;
 
 import io.jeidiiy.sirenordersystem.user.domain.User;
 import io.jeidiiy.sirenordersystem.web.validation.Nickname;

@@ -5,7 +5,7 @@ import static org.assertj.core.api.BDDAssertions.catchThrowable;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
-import io.jeidiiy.sirenordersystem.user.dto.UserPostRequestBody;
+import io.jeidiiy.sirenordersystem.user.domain.dto.UserPostRequestBody;
 import io.jeidiiy.sirenordersystem.user.exception.UserAlreadyExistsException;
 import io.jeidiiy.sirenordersystem.user.repository.UserJpaRepository;
 import java.util.Optional;

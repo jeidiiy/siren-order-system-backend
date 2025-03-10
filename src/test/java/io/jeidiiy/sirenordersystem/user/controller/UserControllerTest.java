@@ -10,7 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jeidiiy.sirenordersystem.config.SecurityConfig;
-import io.jeidiiy.sirenordersystem.user.dto.UserPostRequestBody;
+import io.jeidiiy.sirenordersystem.user.domain.dto.UserPostRequestBody;
 import io.jeidiiy.sirenordersystem.user.exception.UserAlreadyExistsException;
 import io.jeidiiy.sirenordersystem.user.service.UserService;
 import org.hamcrest.Matchers;
