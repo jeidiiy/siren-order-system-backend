@@ -30,7 +30,9 @@ public class SecurityConfig {
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     return http.authorizeHttpRequests(
             auth ->
-                auth.requestMatchers(POST, "/api/v1/users/authenticate") // 로그인 API
+                auth.requestMatchers(POST, "/api/v1/users") // 회원가입 API
+                    .permitAll()
+                    .requestMatchers(POST, "/api/v1/users/authenticate") // 로그인 API
                     .permitAll()
                     .requestMatchers(POST, "/api/v1/refresh-token") // Access Token 재발급 API
                     .permitAll()
