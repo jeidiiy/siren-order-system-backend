@@ -1,23 +1,23 @@
 package io.jeidiiy.sirenordersystem.user.controller;
 
+import io.jeidiiy.sirenordersystem.jwt.model.JwtToken;
+import io.jeidiiy.sirenordersystem.user.domain.User;
 import io.jeidiiy.sirenordersystem.user.domain.dto.UserLoginRequestBody;
 import io.jeidiiy.sirenordersystem.user.domain.dto.UserPostRequestBody;
 import io.jeidiiy.sirenordersystem.user.service.UserService;
 import jakarta.validation.Valid;
+import java.time.Duration;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import io.jeidiiy.sirenordersystem.jwt.model.JwtToken;
-
-import java.time.Duration;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseCookie;
-
-import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/users")
@@ -32,9 +32,10 @@ public class UserController {
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
-  @GetMapping // TODO: 테스트용으로 만들어 놓은 API, 추후 변경 필요
-  public String hello() {
-    return "Hello, World!";
+  @PreAuthorize("#username == authentication.name")
+  @GetMapping("/{username}")
+  public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
+    return ResponseEntity.ok(userService.getUserByUsername(username));
   }
 
   @PostMapping("/authenticate")

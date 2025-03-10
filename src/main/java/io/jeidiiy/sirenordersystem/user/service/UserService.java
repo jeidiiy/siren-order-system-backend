@@ -81,7 +81,7 @@ public class UserService implements UserDetailsService {
     }
   }
 
-  private User getUserByUsername(String username) {
+  public User getUserByUsername(String username) {
     return userJpaRepository
         .findByUsername(username)
         .orElseThrow(() -> new UsernameNotFoundException(username));
