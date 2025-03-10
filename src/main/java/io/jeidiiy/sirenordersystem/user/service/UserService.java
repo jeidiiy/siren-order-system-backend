@@ -6,6 +6,8 @@ import io.jeidiiy.sirenordersystem.jwt.service.JwtService;
 import io.jeidiiy.sirenordersystem.jwt.service.RefreshTokenService;
 import io.jeidiiy.sirenordersystem.user.domain.User;
 import io.jeidiiy.sirenordersystem.user.domain.dto.UserLoginRequestBody;
+import io.jeidiiy.sirenordersystem.user.domain.dto.UserPostRequestBody;
+import io.jeidiiy.sirenordersystem.user.exception.UserAlreadyExistsException;
 import io.jeidiiy.sirenordersystem.user.repository.UserJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,22 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@RequiredArgsConstructor
-@Transactional
-@Service
-public class UserService {
-
-  private final UserJpaRepository userJpaRepository;
-  private final PasswordEncoder passwordEncoder;
-
-  public void signUp(UserPostRequestBody userPostRequestBody) {
-    if (userJpaRepository.findByUsername(userPostRequestBody.getUsername()).isPresent()) {
-      throw new UserAlreadyExistsException("이미 존재하는 사용자입니다.");
-    }
-
-    User newUser = userPostRequestBody.toEntity();
-    newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
-    userJpaRepository.save(newUser);
 import java.util.Date;
 import java.util.Optional;
 
@@ -43,6 +29,16 @@ public class UserService implements UserDetailsService {
   private final JwtService jwtService;
   private final RefreshTokenService refreshTokenService;
   private final PasswordEncoder passwordEncoder;
+
+  public void signUp(UserPostRequestBody userPostRequestBody) {
+    if (userJpaRepository.findByUsername(userPostRequestBody.getUsername()).isPresent()) {
+      throw new UserAlreadyExistsException("이미 존재하는 사용자입니다.");
+    }
+
+    User newUser = userPostRequestBody.toEntity();
+    newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+    userJpaRepository.save(newUser);
+  }
 
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

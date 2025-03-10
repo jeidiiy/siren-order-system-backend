@@ -1,6 +1,7 @@
 package io.jeidiiy.sirenordersystem.user.controller;
 
-import io.jeidiiy.sirenordersystem.user.dto.UserPostRequestBody;
+import io.jeidiiy.sirenordersystem.user.domain.dto.UserLoginRequestBody;
+import io.jeidiiy.sirenordersystem.user.domain.dto.UserPostRequestBody;
 import io.jeidiiy.sirenordersystem.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -11,14 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import io.jeidiiy.sirenordersystem.jwt.model.JwtToken;
-import io.jeidiiy.sirenordersystem.user.domain.dto.UserLoginRequestBody;
-import io.jeidiiy.sirenordersystem.user.service.UserService;
-import jakarta.validation.Valid;
+
 import java.time.Duration;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -32,6 +30,8 @@ public class UserController {
   public ResponseEntity<Void> signUp(@RequestBody @Valid UserPostRequestBody userPostRequestBody) {
     userService.signUp(userPostRequestBody);
     return ResponseEntity.status(HttpStatus.CREATED).build();
+  }
+
   @GetMapping // TODO: 테스트용으로 만들어 놓은 API, 추후 변경 필요
   public String hello() {
     return "Hello, World!";
