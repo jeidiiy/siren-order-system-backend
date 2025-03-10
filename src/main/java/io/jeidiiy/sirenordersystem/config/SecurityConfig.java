@@ -3,6 +3,7 @@ package io.jeidiiy.sirenordersystem.config;
 import static org.springframework.http.HttpMethod.POST;
 
 import io.jeidiiy.sirenordersystem.jwt.filter.JwtAuthenticationFilter;
+import io.jeidiiy.sirenordersystem.jwt.service.JwtAuthenticationEntryPoint;
 import io.jeidiiy.sirenordersystem.jwt.service.JwtLogoutSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
   private final JwtAuthenticationFilter jwtAuthenticationFilter;
+  private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
   private final JwtLogoutSuccessHandler jwtLogoutSuccessHandler;
 
   @Bean
@@ -34,8 +36,10 @@ public class SecurityConfig {
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .csrf(CsrfConfigurer::disable)
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-        .logout(
-            logout -> logout.logoutSuccessHandler(jwtLogoutSuccessHandler))
+        .exceptionHandling(
+            exceptionHandler ->
+                exceptionHandler.authenticationEntryPoint(jwtAuthenticationEntryPoint))
+        .logout(logout -> logout.logoutSuccessHandler(jwtLogoutSuccessHandler))
         .build();
   }
 }
