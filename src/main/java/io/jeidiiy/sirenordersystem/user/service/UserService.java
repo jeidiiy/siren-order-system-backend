@@ -5,8 +5,14 @@ import io.jeidiiy.sirenordersystem.jwt.model.RefreshToken;
 import io.jeidiiy.sirenordersystem.jwt.service.JwtService;
 import io.jeidiiy.sirenordersystem.jwt.service.RefreshTokenService;
 import io.jeidiiy.sirenordersystem.user.domain.User;
+import io.jeidiiy.sirenordersystem.user.domain.dto.AuthenticationUser;
 import io.jeidiiy.sirenordersystem.user.domain.dto.UserLoginRequestBody;
+import io.jeidiiy.sirenordersystem.user.domain.dto.UserPatchRequestBody;
+import io.jeidiiy.sirenordersystem.user.domain.dto.UserPostRequestBody;
+import io.jeidiiy.sirenordersystem.user.exception.UserAlreadyExistsException;
 import io.jeidiiy.sirenordersystem.user.repository.UserJpaRepository;
+import java.util.Date;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,9 +20,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Date;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Transactional
@@ -28,11 +31,40 @@ public class UserService implements UserDetailsService {
   private final RefreshTokenService refreshTokenService;
   private final PasswordEncoder passwordEncoder;
 
+  public void signUp(UserPostRequestBody userPostRequestBody) {
+    if (userJpaRepository.findByUsername(userPostRequestBody.getUsername()).isPresent()) {
+      throw new UserAlreadyExistsException("이미 존재하는 사용자입니다.");
+    }
+
+    User newUser = userPostRequestBody.toEntity();
+    newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+    userJpaRepository.save(newUser);
+  }
+
+  public void updateUserByUsername(String username, UserPatchRequestBody userPatchRequestBody) {
+    User user = getUserByUsername(username);
+
+    user.setUsername(userPatchRequestBody.getUsername());
+    user.setRealname(userPatchRequestBody.getRealname());
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
+    user.setNickname(userPatchRequestBody.getNickname());
+
+    userJpaRepository.save(user);
+  }
+
+  public void deleteUserByUsername(String username) {
+    User user = getUserByUsername(username);
+    userJpaRepository.delete(user);
+  }
+
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    return userJpaRepository
-        .findByUsername(username)
-        .orElseThrow(() -> new UsernameNotFoundException(username));
+    User user = getUserByUsername(username);
+    return AuthenticationUser.builder()
+        .username(user.getUsername())
+        .password(user.getPassword())
+        .role(user.getRole())
+        .build();
   }
 
   public JwtToken login(UserLoginRequestBody userLoginRequestBody) {
@@ -61,7 +93,7 @@ public class UserService implements UserDetailsService {
     }
   }
 
-  private User getUserByUsername(String username) {
+  public User getUserByUsername(String username) {
     return userJpaRepository
         .findByUsername(username)
         .orElseThrow(() -> new UsernameNotFoundException(username));

@@ -2,9 +2,8 @@ package io.jeidiiy.sirenordersystem.jwt.repository;
 
 import io.jeidiiy.sirenordersystem.jwt.model.RefreshToken;
 import io.jeidiiy.sirenordersystem.user.domain.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RefreshTokenJpaRepository extends JpaRepository<RefreshToken, Integer> {
   Optional<RefreshToken> findByToken(String refreshToken);

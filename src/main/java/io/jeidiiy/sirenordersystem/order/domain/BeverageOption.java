@@ -1,10 +1,9 @@
 package io.jeidiiy.sirenordersystem.order.domain;
 
 import jakarta.persistence.*;
+import java.util.Objects;
 import lombok.Getter;
 import lombok.ToString;
-
-import java.util.Objects;
 
 @Getter
 @ToString

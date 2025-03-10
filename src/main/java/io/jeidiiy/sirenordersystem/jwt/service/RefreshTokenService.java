@@ -8,7 +8,6 @@ import io.jeidiiy.sirenordersystem.jwt.repository.RefreshTokenJpaRepository;
 import io.jeidiiy.sirenordersystem.user.domain.User;
 import java.util.Date;
 import java.util.Optional;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

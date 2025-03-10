@@ -1,14 +1,11 @@
 package io.jeidiiy.sirenordersystem.user.domain;
 
 import jakarta.persistence.*;
-import java.util.Collection;
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.Objects;
-
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 @Getter
 @ToString
@@ -16,8 +13,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Table(
     name = "\"users\"",
     indexes = {@Index(columnList = "username")})
+@SQLDelete(sql = "UPDATE users SET deleted_at = NOW() WHERE user_id = ?")
+@SQLRestriction("deleted_at IS NULL")
 @Entity
-public class User implements UserDetails {
+public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer userId;
@@ -32,7 +31,7 @@ public class User implements UserDetails {
 
   @Setter
   @Column(length = 6, nullable = false)
-  private String realName;
+  private String realname;
 
   @Setter
   @Column(length = 6)
@@ -42,27 +41,15 @@ public class User implements UserDetails {
   @Column
   private Role role;
 
+  @Column private LocalDateTime deletedAt;
+
   @Builder
-  public User(String username, String realName, String password, String nickname) {
+  public User(String username, String realname, String password, String nickname) {
     this.username = username;
-    this.realName = realName;
+    this.realname = realname;
     this.password = password;
     this.nickname = nickname;
-  }
-
-  @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    if (this.role == Role.ADMIN) {
-      return List.of(
-          new SimpleGrantedAuthority(Role.ADMIN.name()),
-          new SimpleGrantedAuthority(Role.CUSTOMER.name()),
-          new SimpleGrantedAuthority("ROLE_" + Role.ADMIN.name()),
-          new SimpleGrantedAuthority("ROLE_" + Role.CUSTOMER.name()));
-    }
-
-    return List.of(
-        new SimpleGrantedAuthority(Role.CUSTOMER.name()),
-        new SimpleGrantedAuthority("ROLE_" + Role.CUSTOMER.name()));
+    this.role = Role.CUSTOMER; // 기본값으로 고객으로 저장. 관리자는 별도로 관리
   }
 
   @Override
@@ -76,7 +63,7 @@ public class User implements UserDetails {
 
     return Objects.equals(getUsername(), user.getUsername())
         && Objects.equals(getPassword(), user.getPassword())
-        && Objects.equals(getRealName(), user.getRealName())
+        && Objects.equals(getRealname(), user.getRealname())
         && Objects.equals(getNickname(), user.getNickname())
         && getRole() == user.getRole();
   }
@@ -86,6 +73,6 @@ public class User implements UserDetails {
     if (getUserId() != null) {
       return Objects.hash(getUserId());
     }
-    return Objects.hash(getUsername(), getPassword(), getRealName(), getNickname(), getRole());
+    return Objects.hash(getUsername(), getPassword(), getRealname(), getNickname(), getRole());
   }
 }
