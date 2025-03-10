@@ -7,6 +7,7 @@ import io.jeidiiy.sirenordersystem.jwt.service.RefreshTokenService;
 import io.jeidiiy.sirenordersystem.user.domain.User;
 import io.jeidiiy.sirenordersystem.user.domain.dto.AuthenticationUser;
 import io.jeidiiy.sirenordersystem.user.domain.dto.UserLoginRequestBody;
+import io.jeidiiy.sirenordersystem.user.domain.dto.UserPatchRequestBody;
 import io.jeidiiy.sirenordersystem.user.domain.dto.UserPostRequestBody;
 import io.jeidiiy.sirenordersystem.user.exception.UserAlreadyExistsException;
 import io.jeidiiy.sirenordersystem.user.repository.UserJpaRepository;
@@ -39,6 +40,17 @@ public class UserService implements UserDetailsService {
     User newUser = userPostRequestBody.toEntity();
     newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
     userJpaRepository.save(newUser);
+  }
+
+  public void updateUserByUsername(String username, UserPatchRequestBody userPatchRequestBody) {
+    User user = userJpaRepository.findByUsername(username).orElseThrow();
+
+    user.setUsername(userPatchRequestBody.getUsername());
+    user.setRealname(userPatchRequestBody.getRealname());
+    user.setPassword(passwordEncoder.encode(user.getPassword()));
+    user.setNickname(userPatchRequestBody.getNickname());
+
+    userJpaRepository.save(user);
   }
 
   @Override

@@ -3,6 +3,7 @@ package io.jeidiiy.sirenordersystem.user.controller;
 import io.jeidiiy.sirenordersystem.jwt.model.JwtToken;
 import io.jeidiiy.sirenordersystem.user.domain.User;
 import io.jeidiiy.sirenordersystem.user.domain.dto.UserLoginRequestBody;
+import io.jeidiiy.sirenordersystem.user.domain.dto.UserPatchRequestBody;
 import io.jeidiiy.sirenordersystem.user.domain.dto.UserPostRequestBody;
 import io.jeidiiy.sirenordersystem.user.service.UserService;
 import jakarta.validation.Valid;
@@ -36,6 +37,15 @@ public class UserController {
   @GetMapping("/{username}")
   public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
     return ResponseEntity.ok(userService.getUserByUsername(username));
+  }
+
+  @PreAuthorize("#username == authentication.name")
+  @PatchMapping("/{username}")
+  public ResponseEntity<Void> updateUserByUsername(
+      @PathVariable String username,
+      @Valid @RequestBody UserPatchRequestBody userPatchRequestBody) {
+    userService.updateUserByUsername(username, userPatchRequestBody);
+    return ResponseEntity.ok().build();
   }
 
   @PostMapping("/authenticate")
