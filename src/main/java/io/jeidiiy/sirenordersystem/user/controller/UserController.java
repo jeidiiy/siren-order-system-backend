@@ -48,6 +48,14 @@ public class UserController {
     return ResponseEntity.ok().build();
   }
 
+  @PreAuthorize("#username == authentication.name")
+  @DeleteMapping("/{username}")
+  public ResponseEntity<Void> deleteUserByUsername(
+          @PathVariable String username) {
+    userService.deleteUserByUsername(username);
+    return ResponseEntity.ok().build();
+  }
+
   @PostMapping("/authenticate")
   public ResponseEntity<Void> authenticate(
       @Valid @RequestBody UserLoginRequestBody userLoginRequestBody) {

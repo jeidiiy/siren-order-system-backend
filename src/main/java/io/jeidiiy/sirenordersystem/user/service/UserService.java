@@ -53,6 +53,11 @@ public class UserService implements UserDetailsService {
     userJpaRepository.save(user);
   }
 
+  public void deleteUserByUsername(String username) {
+    User user = getUserByUsername(username);
+    userJpaRepository.delete(user);
+  }
+
   @Override
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     return userJpaRepository

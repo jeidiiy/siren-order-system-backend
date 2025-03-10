@@ -1,8 +1,11 @@
 package io.jeidiiy.sirenordersystem.user.domain;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 @Getter
 @ToString
@@ -10,6 +13,8 @@ import lombok.*;
 @Table(
     name = "\"users\"",
     indexes = {@Index(columnList = "username")})
+@SQLDelete(sql = "UPDATE users SET deleted_at = NOW() WHERE user_id = ?")
+@SQLRestriction("deleted_at IS NULL")
 @Entity
 public class User {
   @Id
@@ -35,6 +40,8 @@ public class User {
   @Enumerated(EnumType.STRING)
   @Column
   private Role role;
+
+  @Column private LocalDateTime deletedAt;
 
   @Builder
   public User(String username, String realname, String password, String nickname) {
