@@ -5,6 +5,7 @@ import io.jeidiiy.sirenordersystem.jwt.model.RefreshToken;
 import io.jeidiiy.sirenordersystem.jwt.service.JwtService;
 import io.jeidiiy.sirenordersystem.jwt.service.RefreshTokenService;
 import io.jeidiiy.sirenordersystem.user.domain.User;
+import io.jeidiiy.sirenordersystem.user.domain.dto.AuthenticationUser;
 import io.jeidiiy.sirenordersystem.user.domain.dto.UserLoginRequestBody;
 import io.jeidiiy.sirenordersystem.user.domain.dto.UserPostRequestBody;
 import io.jeidiiy.sirenordersystem.user.exception.UserAlreadyExistsException;
@@ -44,6 +45,13 @@ public class UserService implements UserDetailsService {
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
     return userJpaRepository
         .findByUsername(username)
+        .map(
+            user ->
+                AuthenticationUser.builder()
+                    .username(user.getUsername())
+                    .password(user.getPassword())
+                    .role(user.getRole())
+                    .build())
         .orElseThrow(() -> new UsernameNotFoundException(username));
   }
 

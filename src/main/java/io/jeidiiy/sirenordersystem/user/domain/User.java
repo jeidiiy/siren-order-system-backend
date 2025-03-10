@@ -17,7 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
     name = "\"users\"",
     indexes = {@Index(columnList = "username")})
 @Entity
-public class User implements UserDetails {
+public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer userId;
@@ -49,21 +49,6 @@ public class User implements UserDetails {
     this.password = password;
     this.nickname = nickname;
     this.role = Role.CUSTOMER; // 기본값으로 고객으로 저장. 관리자는 별도로 관리
-  }
-
-  @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    if (this.role == Role.ADMIN) {
-      return List.of(
-          new SimpleGrantedAuthority(Role.ADMIN.name()),
-          new SimpleGrantedAuthority(Role.CUSTOMER.name()),
-          new SimpleGrantedAuthority("ROLE_" + Role.ADMIN.name()),
-          new SimpleGrantedAuthority("ROLE_" + Role.CUSTOMER.name()));
-    }
-
-    return List.of(
-        new SimpleGrantedAuthority(Role.CUSTOMER.name()),
-        new SimpleGrantedAuthority("ROLE_" + Role.CUSTOMER.name()));
   }
 
   @Override
