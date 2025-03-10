@@ -10,6 +10,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jeidiiy.sirenordersystem.config.SecurityConfig;
+import io.jeidiiy.sirenordersystem.jwt.filter.JwtAuthenticationFilter;
+import io.jeidiiy.sirenordersystem.jwt.service.JwtAuthenticationEntryPoint;
+import io.jeidiiy.sirenordersystem.jwt.service.JwtLogoutSuccessHandler;
+import io.jeidiiy.sirenordersystem.jwt.service.JwtService;
 import io.jeidiiy.sirenordersystem.user.domain.dto.UserPostRequestBody;
 import io.jeidiiy.sirenordersystem.user.exception.UserAlreadyExistsException;
 import io.jeidiiy.sirenordersystem.user.service.UserService;
@@ -19,19 +23,28 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.context.bean.override.mockito.MockitoSpyBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 @DisplayName("[Controller] 사용자 컨트롤러 테스트")
-@Import(SecurityConfig.class)
-@WebMvcTest
+@Import({SecurityConfig.class, JwtAuthenticationFilter.class})
+@WebMvcTest(UserController.class)
 class UserControllerTest {
   @Autowired MockMvc mvc;
+  @Autowired ObjectMapper mapper;
+
   @MockitoBean UserService userService;
-  ObjectMapper mapper = new ObjectMapper();
+  @MockitoBean JwtService jwtService;
+  @MockitoBean JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+  @MockitoBean JwtLogoutSuccessHandler jwtLogoutSuccessHandler;
 
   @DisplayName("[POST] 존재하지 않는 사용자 이름으로 회원가입 시도 -> 201 Created (정상)")
   @Test
