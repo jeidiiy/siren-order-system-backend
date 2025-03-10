@@ -4,7 +4,6 @@ import io.jeidiiy.sirenordersystem.user.domain.User;
 import jakarta.persistence.*;
 import java.time.Instant;
 import java.util.Objects;
-
 import lombok.*;
 
 @AllArgsConstructor
