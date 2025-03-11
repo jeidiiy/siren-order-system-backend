@@ -19,6 +19,8 @@ public class PickupOption {
   @Column(length = 10)
   private String name;
 
+  @Setter @Column private String description;
+
   @Override
   public boolean equals(Object o) {
     if (o == null || getClass() != o.getClass()) return false;
@@ -28,7 +30,8 @@ public class PickupOption {
       return Objects.equals(getPickupOptionId(), that.getPickupOptionId());
     }
 
-    return Objects.equals(getName(), that.getName());
+    return Objects.equals(getName(), that.getName())
+        && Objects.equals(getDescription(), that.getDescription());
   }
 
   @Override
@@ -37,6 +40,6 @@ public class PickupOption {
       return Objects.hash(getPickupOptionId());
     }
 
-    return Objects.hash(getName());
+    return Objects.hash(getName(), getDescription());
   }
 }
