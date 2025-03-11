@@ -2,7 +2,6 @@ package io.jeidiiy.sirenordersystem.user.controller;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
-import static org.mockito.Mockito.doThrow;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -14,6 +13,7 @@ import io.jeidiiy.sirenordersystem.jwt.model.JwtToken;
 import io.jeidiiy.sirenordersystem.jwt.service.JwtAuthenticationEntryPoint;
 import io.jeidiiy.sirenordersystem.jwt.service.JwtLogoutSuccessHandler;
 import io.jeidiiy.sirenordersystem.jwt.service.JwtService;
+import io.jeidiiy.sirenordersystem.security.WithMockCustomUser;
 import io.jeidiiy.sirenordersystem.user.domain.dto.UserPatchRequestBody;
 import io.jeidiiy.sirenordersystem.user.domain.dto.UserPostRequestBody;
 import io.jeidiiy.sirenordersystem.user.exception.UserAlreadyExistsException;
@@ -24,7 +24,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
@@ -35,7 +34,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @DisplayName("[Controller] 사용자 컨트롤러 테스트")
 @Import({SecurityConfig.class, JwtAuthenticationFilter.class, JwtService.class})
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @WebMvcTest(UserController.class)
 class UserControllerTest {
   @Autowired MockMvc mvc;
@@ -47,11 +45,11 @@ class UserControllerTest {
   @MockitoBean JwtLogoutSuccessHandler jwtLogoutSuccessHandler;
 
   @DisplayName("[GET] 로그인한 유저가 자기 정보 조회 -> 200 OK (정상)")
-  @WithMockUser("loginUser")
+  @WithMockCustomUser
   @Test
   void givenAuthenticationUserAndSameUsername_whenRequesting_thenRespondsUser() throws Exception {
     // given
-    String username = "loginUser";
+    String username = "loginUsername";
     JwtToken jwtToken = jwtService.generateJwtToken(username);
 
     // when & then
@@ -63,7 +61,7 @@ class UserControllerTest {
   }
 
   @DisplayName("[GET] 로그인한 유저가 다른 사람 정보 조회 -> 403 Forbidden (실패)")
-  @WithMockUser("testUser")
+  @WithMockCustomUser
   @Test
   void givenAuthenticationUserAndDifferentUsername_whenRequesting_thenResponds403()
       throws Exception {
@@ -101,7 +99,7 @@ class UserControllerTest {
     then(userService).should().signUp(userPostRequestBody);
   }
 
-  @DisplayName("[POST] 이미 존재하는 사용자 ID로 회원가입 시도 -> 409 (실패)")
+  @DisplayName("[POST] 이미 존재하는 사용자 ID로 회원가입 시도 -> 409 Conflict (실패)")
   @Test
   void givenExistsUserRequest_whenCreating_thenResponds409() throws Exception {
     // given
@@ -113,8 +111,8 @@ class UserControllerTest {
             .nickname("테스트닉네임")
             .build();
 
-    doThrow(new UserAlreadyExistsException("이미 존재하는 사용자입니다."))
-        .when(userService)
+    willThrow(new UserAlreadyExistsException("이미 존재하는 사용자입니다."))
+        .given(userService)
         .signUp(any(UserPostRequestBody.class));
 
     // when & then
@@ -231,11 +229,11 @@ class UserControllerTest {
   }
 
   @DisplayName("[PATCH] 로그인한 유저가 자기 정보 수정 -> 200 OK (정상)")
-  @WithMockUser("loginUser")
+  @WithMockCustomUser
   @Test
   void givenAuthenticationUserAndSameUsername_whenUpdating_thenResponds200() throws Exception {
     // given
-    String username = "loginUser";
+    String username = "loginUsername";
     JwtToken jwtToken = jwtService.generateJwtToken(username);
     UserPatchRequestBody userPatchRequestBody =
         UserPatchRequestBody.builder()
@@ -256,11 +254,11 @@ class UserControllerTest {
   }
 
   @DisplayName("[PATCH] 로그인한 유저가 다른 사람 정보 수정 -> 403 Forbidden (실패)")
-  @WithMockUser("loginUser")
+  @WithMockCustomUser
   @Test
   void givenAuthenticationUserAndAnotherUsername_whenUpdating_thenResponds403() throws Exception {
     // given
-    String anotherUsername = "anotherUser";
+    String anotherUsername = "anotherUsername";
     JwtToken jwtToken = jwtService.generateJwtToken(anotherUsername);
     UserPatchRequestBody userPatchRequestBody =
         UserPatchRequestBody.builder()
@@ -281,11 +279,11 @@ class UserControllerTest {
   }
 
   @DisplayName("[DELETE] 로그인한 유저가 회원 탈퇴 -> 200 OK (정상)")
-  @WithMockUser("loginUser")
+  @WithMockCustomUser
   @Test
   void givenAuthenticationUserAndSameUsername_whenDeleting_thenResponds200() throws Exception {
     // given
-    String username = "loginUser";
+    String username = "loginUsername";
     JwtToken jwtToken = jwtService.generateJwtToken(username);
 
     // when & then
@@ -297,11 +295,11 @@ class UserControllerTest {
   }
 
   @DisplayName("[DELETE] 로그인한 유저가 다른 사람 정보 삭제 -> 403 Forbidden (실패)")
-  @WithMockUser("loginUser")
+  @WithMockUser("loginUsername")
   @Test
   void givenAuthenticationUserAndAnotherUsername_whenDeleting_thenResponds403() throws Exception {
     // given
-    String anotherUsername = "anotherUser";
+    String anotherUsername = "anotherUsername";
     JwtToken jwtToken = jwtService.generateJwtToken(anotherUsername);
 
     // when & then

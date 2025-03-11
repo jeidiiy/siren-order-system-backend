@@ -1,0 +1,6 @@
+### GET request to example server
+GET http://localhost:8080/api/v1/stores
+
+###
+PATCH http://localhost:8080/api/v1/stores/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJEaW1vUmVldmVzIiwiaWF0IjoxNzQxNjk0MTEzLCJleHAiOjE3NDE3MDQ5MTN9.apbnV5y8KHFjkq8USn5htu9wjg0vCqbua4SJYULggLc

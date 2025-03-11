@@ -1,5 +1,6 @@
 package io.jeidiiy.sirenordersystem.config;
 
+import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 
 import io.jeidiiy.sirenordersystem.jwt.filter.JwtAuthenticationFilter;
@@ -35,6 +36,8 @@ public class SecurityConfig {
                     .requestMatchers(POST, "/api/v1/users/authenticate") // 로그인 API
                     .permitAll()
                     .requestMatchers(POST, "/api/v1/refresh-token") // Access Token 재발급 API
+                    .permitAll()
+                    .requestMatchers(GET, "/api/v1/stores/**") // 매장 목록 조회 API
                     .permitAll()
                     .anyRequest()
                     .authenticated())
