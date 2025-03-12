@@ -22,7 +22,6 @@
 - IntelliJ IDEA
 - Fork
 - Notion
-- draw.io
 
 ## 주요 기능
 
@@ -56,7 +55,7 @@
 
 ## ERD
 
-![siren-order-system.drawio.png](./images/siren-order-system.drawio.png)
+![siren_order_system.png](./images/siren_order_system.png)
 
 ## 커밋 규칙
 
