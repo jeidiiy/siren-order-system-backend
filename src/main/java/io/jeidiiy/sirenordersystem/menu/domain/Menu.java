@@ -26,8 +26,6 @@ public class Menu {
   @Column(nullable = false)
   private Integer price;
 
-  @Column private Category category;
-
   @Column(length = 2048)
   private String imageUrl;
 
@@ -44,7 +42,6 @@ public class Menu {
         && Objects.equals(getEnName(), menu.getEnName())
         && Objects.equals(getDescription(), menu.getDescription())
         && Objects.equals(getPrice(), menu.getPrice())
-        && getCategory() == menu.getCategory()
         && Objects.equals(getImageUrl(), menu.getImageUrl());
   }
 
@@ -55,6 +52,6 @@ public class Menu {
     }
 
     return Objects.hash(
-        getKrName(), getEnName(), getDescription(), getPrice(), getCategory(), getImageUrl());
+        getKrName(), getEnName(), getDescription(), getPrice(), getImageUrl());
   }
 }

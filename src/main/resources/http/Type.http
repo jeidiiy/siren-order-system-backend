@@ -1,0 +1,11 @@
+### 음료 카테고리로 조회
+GET http://localhost:8080/api/v1/types/beverage
+
+### 푸드 카테고리로 조회
+GET http://localhost:8080/api/v1/types/food
+
+### 상품 카테고리로 조회
+GET http://localhost:8080/api/v1/types/product
+
+### 없는 카테고리로 조회
+GET http://localhost:8080/api/v1/types/null
