@@ -7,38 +7,38 @@ import lombok.ToString;
 
 @Getter
 @ToString
-@Table(name = "type_products")
+@Table(name = "product_types")
 @Entity
-public class TypeProduct {
+public class ProductType {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer typeProductId;
-
-  @ManyToOne(fetch = FetchType.LAZY)
-  @ToString.Exclude
-  private Type type;
+  private Integer productTypeId;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @ToString.Exclude
   private Product product;
 
+  @ManyToOne(fetch = FetchType.LAZY)
+  @ToString.Exclude
+  private Type type;
+
   @Override
   public boolean equals(Object o) {
     if (o == null || getClass() != o.getClass()) return false;
-    TypeProduct typeProduct = (TypeProduct) o;
+    ProductType productType = (ProductType) o;
 
-    if (typeProduct.getTypeProductId() != null) {
-      return Objects.equals(getTypeProductId(), typeProduct.getTypeProductId());
+    if (productType.getProductTypeId() != null) {
+      return Objects.equals(getProductTypeId(), productType.getProductTypeId());
     }
 
-    return Objects.equals(getType(), typeProduct.getType())
-        && Objects.equals(getProduct(), typeProduct.getProduct());
+    return Objects.equals(getType(), productType.getType())
+        && Objects.equals(getProduct(), productType.getProduct());
   }
 
   @Override
   public int hashCode() {
-    if (getTypeProductId() != null) {
-      return Objects.hash(getTypeProductId());
+    if (getProductTypeId() != null) {
+      return Objects.hash(getProductTypeId());
     }
 
     return Objects.hash(getType(), getProduct());

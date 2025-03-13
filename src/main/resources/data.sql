@@ -45,7 +45,7 @@ VALUES (1, '카페 아메리카노', 'Caffe Americano', '진한 에스프레소�
        (6, '사이렌 하우스 머그 355ml', 'Siren house mug 355ml', '클래식한 디자인과 사이렌 로고가 매치된 355ml 머그입니다.', 19000,
         '사이렌 하우스 머그 355ml 이미지', 'MERCHANDISE', 'MERCHANDISE');
 
-INSERT INTO type_products (type_product_id, product_product_id, type_type_id)
+INSERT INTO product_types (product_type_id, product_product_id, type_type_id)
 VALUES (1, 1, 3),
        (2, 2, 3),
        (3, 3, 4),

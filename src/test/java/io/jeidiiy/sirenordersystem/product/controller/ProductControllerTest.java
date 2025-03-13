@@ -11,7 +11,7 @@ import io.jeidiiy.sirenordersystem.product.domain.dto.ProductResponseDto;
 import io.jeidiiy.sirenordersystem.product.service.ProductService;
 import io.jeidiiy.sirenordersystem.product.domain.Category;
 import io.jeidiiy.sirenordersystem.product.domain.Type;
-import io.jeidiiy.sirenordersystem.product.domain.TypeProduct;
+import io.jeidiiy.sirenordersystem.product.domain.ProductType;
 import io.jeidiiy.sirenordersystem.user.service.UserService;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -56,24 +56,24 @@ class ProductControllerTest {
             Type.of("NEW", "", Category.BEVERAGE),
             Type.of("추천", "Recommend", Category.BEVERAGE),
             Type.of("에스프레소", "Espresso", Category.BEVERAGE));
-    TypeProduct typeProduct1 = new TypeProduct();
-    ReflectionTestUtils.setField(typeProduct1, "typeProductId", 1);
-    ReflectionTestUtils.setField(typeProduct1, "type", types.get(2)); // 에스프레소
-    ReflectionTestUtils.setField(typeProduct1, "product", products.get(0)); // 아메리카노
-    TypeProduct typeProduct2 = new TypeProduct();
-    ReflectionTestUtils.setField(typeProduct2, "typeProductId", 2);
-    ReflectionTestUtils.setField(typeProduct2, "type", types.get(1)); // 추천
-    ReflectionTestUtils.setField(typeProduct2, "product", products.get(0)); // 아메리카노
-    TypeProduct typeProduct3 = new TypeProduct();
-    ReflectionTestUtils.setField(typeProduct3, "typeProductId", 2);
-    ReflectionTestUtils.setField(typeProduct3, "type", types.get(0)); // NEW
-    ReflectionTestUtils.setField(typeProduct3, "product", products.get(1)); // 카페라떼
-    TypeProduct typeProduct4 = new TypeProduct();
-    ReflectionTestUtils.setField(typeProduct4, "typeProductId", 2);
-    ReflectionTestUtils.setField(typeProduct4, "type", types.get(2)); // 에스프레소
-    ReflectionTestUtils.setField(typeProduct4, "product", products.get(1)); // 카페라떼
-    List<TypeProduct> typeProducts =
-        List.of(typeProduct1, typeProduct2, typeProduct3, typeProduct4);
+    ProductType productType1 = new ProductType();
+    ReflectionTestUtils.setField(productType1, "typeProductId", 1);
+    ReflectionTestUtils.setField(productType1, "type", types.get(2)); // 에스프레소
+    ReflectionTestUtils.setField(productType1, "product", products.get(0)); // 아메리카노
+    ProductType productType2 = new ProductType();
+    ReflectionTestUtils.setField(productType2, "typeProductId", 2);
+    ReflectionTestUtils.setField(productType2, "type", types.get(1)); // 추천
+    ReflectionTestUtils.setField(productType2, "product", products.get(0)); // 아메리카노
+    ProductType productType3 = new ProductType();
+    ReflectionTestUtils.setField(productType3, "typeProductId", 2);
+    ReflectionTestUtils.setField(productType3, "type", types.get(0)); // NEW
+    ReflectionTestUtils.setField(productType3, "product", products.get(1)); // 카페라떼
+    ProductType productType4 = new ProductType();
+    ReflectionTestUtils.setField(productType4, "typeProductId", 2);
+    ReflectionTestUtils.setField(productType4, "type", types.get(2)); // 에스프레소
+    ReflectionTestUtils.setField(productType4, "product", products.get(1)); // 카페라떼
+    List<ProductType> productTypes =
+        List.of(productType1, productType2, productType3, productType4);
   }
 
   @DisplayName("[GET] 종류로 메뉴 조회하기 -> 200 OK [성공]")
