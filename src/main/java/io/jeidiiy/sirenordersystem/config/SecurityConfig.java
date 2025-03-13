@@ -41,6 +41,8 @@ public class SecurityConfig {
                     .permitAll()
                     .requestMatchers(GET, "/api/v1/types/**") // 종류 목록 조회 API
                     .permitAll()
+                    .requestMatchers(GET, "/api/v1/products/**") // 상품 목록 조회 API
+                    .permitAll()
                     .anyRequest()
                     .authenticated())
         .sessionManagement(
