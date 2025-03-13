@@ -1,0 +1,5 @@
+### 종류별로 조회하기
+GET http://localhost:8080/api/v1/products?typeId=3
+
+### 없는 종류로 조회하면 400 BAD REQUEST
+GET http://localhost:8080/api/v1/products?typeId=9999
