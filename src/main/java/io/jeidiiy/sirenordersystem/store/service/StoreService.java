@@ -43,7 +43,7 @@ public class StoreService {
   @Transactional(readOnly = true)
   public Store findStoreByStoreIdAndUserUsername(Integer storeId, String currentUserUsername) {
     return storeJpaRepository
-        .findByStoreIdAndUserUsername(storeId, currentUserUsername)
+        .findByIdAndUserUsername(storeId, currentUserUsername)
         .orElseThrow(() -> new StoreNotFoundException(storeId, currentUserUsername));
   }
 

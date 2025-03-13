@@ -12,7 +12,7 @@ import lombok.ToString;
 public class BeverageOption {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer orderMenuOptionId;
+  private Integer id;
 
   @Column(length = 30, nullable = false)
   private String name;
@@ -27,8 +27,8 @@ public class BeverageOption {
     if (o == null || getClass() != o.getClass()) return false;
     BeverageOption that = (BeverageOption) o;
 
-    if (that.getOrderMenuOptionId() != null) {
-      return Objects.equals(getOrderMenuOptionId(), that.getOrderMenuOptionId());
+    if (that.getId() != null) {
+      return Objects.equals(getId(), that.getId());
     }
     return Objects.equals(getName(), that.getName())
         && getType() == that.getType()
@@ -37,8 +37,8 @@ public class BeverageOption {
 
   @Override
   public int hashCode() {
-    if (getOrderMenuOptionId() != null) {
-      return Objects.hash(getOrderMenuOptionId());
+    if (getId() != null) {
+      return Objects.hash(getId());
     }
 
     return Objects.hash(getName(), getType(), getDefaultValue());

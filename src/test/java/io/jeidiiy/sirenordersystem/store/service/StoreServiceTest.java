@@ -57,7 +57,7 @@ class StoreServiceTest {
     // given
     Integer storeId = 1;
     Store store = stores.get(storeId);
-    ReflectionTestUtils.setField(store, "storeId", storeId);
+    ReflectionTestUtils.setField(store, "id", storeId);
     given(storeJpaRepository.findById(storeId)).willReturn(Optional.of(store));
 
     // when

@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface StoreJpaRepository extends JpaRepository<Store, Integer> {
-  Optional<Store> findByStoreIdAndUserUsername(Integer storeId, String username);
+  Optional<Store> findByIdAndUserUsername(Integer storeId, String username);
 }

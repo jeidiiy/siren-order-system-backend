@@ -13,7 +13,7 @@ import lombok.ToString;
 public class PickupOption {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer pickupOptionId;
+  private Integer id;
 
   @Setter
   @Column(length = 10)
@@ -26,8 +26,8 @@ public class PickupOption {
     if (o == null || getClass() != o.getClass()) return false;
     PickupOption that = (PickupOption) o;
 
-    if (that.getPickupOptionId() != null) {
-      return Objects.equals(getPickupOptionId(), that.getPickupOptionId());
+    if (that.getId() != null) {
+      return Objects.equals(getId(), that.getId());
     }
 
     return Objects.equals(getName(), that.getName())
@@ -36,8 +36,8 @@ public class PickupOption {
 
   @Override
   public int hashCode() {
-    if (getPickupOptionId() != null) {
-      return Objects.hash(getPickupOptionId());
+    if (getId() != null) {
+      return Objects.hash(getId());
     }
 
     return Objects.hash(getName(), getDescription());
