@@ -1,0 +1,112 @@
+package io.jeidiiy.sirenordersystem.product.controller;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jeidiiy.sirenordersystem.config.SecurityConfig;
+import io.jeidiiy.sirenordersystem.jwt.filter.JwtAuthenticationFilter;
+import io.jeidiiy.sirenordersystem.jwt.service.JwtAuthenticationEntryPoint;
+import io.jeidiiy.sirenordersystem.jwt.service.JwtLogoutSuccessHandler;
+import io.jeidiiy.sirenordersystem.jwt.service.JwtService;
+import io.jeidiiy.sirenordersystem.product.domain.Product;
+import io.jeidiiy.sirenordersystem.product.domain.beverage.Beverage;
+import io.jeidiiy.sirenordersystem.product.domain.dto.ProductResponseDto;
+import io.jeidiiy.sirenordersystem.product.service.ProductService;
+import io.jeidiiy.sirenordersystem.type.domain.Category;
+import io.jeidiiy.sirenordersystem.type.domain.Type;
+import io.jeidiiy.sirenordersystem.type.domain.TypeProduct;
+import io.jeidiiy.sirenordersystem.user.service.UserService;
+import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.test.web.servlet.MockMvc;
+
+import static org.mockito.BDDMockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@DisplayName("[Controller] 상품 컨트롤러 테스트")
+@Import({SecurityConfig.class, JwtAuthenticationFilter.class, JwtService.class})
+@WebMvcTest(ProductController.class)
+class ProductControllerTest {
+  @Autowired MockMvc mvc;
+  @Autowired ObjectMapper mapper;
+  @Autowired JwtService jwtService;
+
+  @MockitoBean ProductService productService;
+  @MockitoBean UserService userService;
+  @MockitoBean JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+  @MockitoBean JwtLogoutSuccessHandler jwtLogoutSuccessHandler;
+
+  private List<Product> products;
+
+  @BeforeEach
+  void setup() {
+    products =
+        List.of(
+            Product.of("아메리카노", "Americano", "쌉싸름한 커피", 4500, "아메리카노이미지", Category.BEVERAGE),
+            Product.of("카페라떼", "Caffe Latte", "고소한 커피", 5000, "카페라떼이미지", Category.BEVERAGE),
+            Product.of("샌드위치", "Sandwich", "샌드위치", 5700, "샌드위치이미지", Category.FOOD));
+    // 아래 데이터들은 테스트에 영향은 없지만 관계를 나타내기 위해 작성함
+    List<Type> types =
+        List.of(
+            Type.of("NEW", "", Category.BEVERAGE),
+            Type.of("추천", "Recommend", Category.BEVERAGE),
+            Type.of("에스프레소", "Espresso", Category.BEVERAGE));
+    TypeProduct typeProduct1 = new TypeProduct();
+    ReflectionTestUtils.setField(typeProduct1, "typeProductId", 1);
+    ReflectionTestUtils.setField(typeProduct1, "type", types.get(2)); // 에스프레소
+    ReflectionTestUtils.setField(typeProduct1, "product", products.get(0)); // 아메리카노
+    TypeProduct typeProduct2 = new TypeProduct();
+    ReflectionTestUtils.setField(typeProduct2, "typeProductId", 2);
+    ReflectionTestUtils.setField(typeProduct2, "type", types.get(1)); // 추천
+    ReflectionTestUtils.setField(typeProduct2, "product", products.get(0)); // 아메리카노
+    TypeProduct typeProduct3 = new TypeProduct();
+    ReflectionTestUtils.setField(typeProduct3, "typeProductId", 2);
+    ReflectionTestUtils.setField(typeProduct3, "type", types.get(0)); // NEW
+    ReflectionTestUtils.setField(typeProduct3, "product", products.get(1)); // 카페라떼
+    TypeProduct typeProduct4 = new TypeProduct();
+    ReflectionTestUtils.setField(typeProduct4, "typeProductId", 2);
+    ReflectionTestUtils.setField(typeProduct4, "type", types.get(2)); // 에스프레소
+    ReflectionTestUtils.setField(typeProduct4, "product", products.get(1)); // 카페라떼
+    List<TypeProduct> typeProducts =
+        List.of(typeProduct1, typeProduct2, typeProduct3, typeProduct4);
+  }
+
+  @DisplayName("[GET] 종류로 메뉴 조회하기 -> 200 OK [성공]")
+  @Test
+  void givenType_whenRequesting_thenRespondsMenus() throws Exception {
+    // given
+    int typeId = 1; // 에스프레소
+
+    given(productService.findAllByTypeId(typeId))
+        .willReturn(
+            List.of(
+                ProductResponseDto.from(products.get(0)),
+                ProductResponseDto.from(products.get(1))));
+
+    // when & then
+    mvc.perform(get("/api/v1/products?typeId=" + typeId)).andExpect(status().isOk());
+    then(productService).should().findAllByTypeId(typeId);
+  }
+
+  @DisplayName("[GET] 없는 종류로 요청 시 -> 400 BAD REQUEST [실패]")
+  @Test
+  void givenNonExistsType_whenRequesting_thenResponds400() throws Exception {
+    // given
+    int nonExistsTypeId = 9999;
+
+    willThrow(IllegalArgumentException.class)
+        .given(productService)
+        .findAllByTypeId(nonExistsTypeId);
+
+    // when & then
+    mvc.perform(get("/api/v1/products?typeId=" + nonExistsTypeId))
+        .andExpect(status().isBadRequest());
+    then(productService).should().findAllByTypeId(nonExistsTypeId);
+  }
+}
