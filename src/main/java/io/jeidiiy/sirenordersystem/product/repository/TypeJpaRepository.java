@@ -1,7 +1,7 @@
-package io.jeidiiy.sirenordersystem.type.repository;
+package io.jeidiiy.sirenordersystem.product.repository;
 
-import io.jeidiiy.sirenordersystem.type.domain.Category;
-import io.jeidiiy.sirenordersystem.type.domain.Type;
+import io.jeidiiy.sirenordersystem.product.domain.Category;
+import io.jeidiiy.sirenordersystem.product.domain.Type;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

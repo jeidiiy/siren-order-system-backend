@@ -1,7 +1,7 @@
 package io.jeidiiy.sirenordersystem.product.domain.beverage;
 
 import io.jeidiiy.sirenordersystem.product.domain.Product;
-import io.jeidiiy.sirenordersystem.type.domain.Category;
+import io.jeidiiy.sirenordersystem.product.domain.Category;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.AccessLevel;

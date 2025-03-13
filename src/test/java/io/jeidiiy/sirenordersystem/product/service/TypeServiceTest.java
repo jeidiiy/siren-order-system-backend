@@ -1,14 +1,15 @@
-package io.jeidiiy.sirenordersystem.type.service;
+package io.jeidiiy.sirenordersystem.product.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
-import io.jeidiiy.sirenordersystem.type.domain.Category;
-import io.jeidiiy.sirenordersystem.type.domain.Type;
-import io.jeidiiy.sirenordersystem.type.domain.dto.TypeResponseDto;
-import io.jeidiiy.sirenordersystem.type.repository.TypeJpaRepository;
+import io.jeidiiy.sirenordersystem.product.domain.Category;
+import io.jeidiiy.sirenordersystem.product.domain.Type;
+import io.jeidiiy.sirenordersystem.product.domain.dto.TypeResponseDto;
+import io.jeidiiy.sirenordersystem.product.repository.TypeJpaRepository;
 import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @DisplayName("[Service] 종류 서비스 테스트")
 @ExtendWith(MockitoExtension.class)
 class TypeServiceTest {
-  @InjectMocks TypeService sut;
+  @InjectMocks
+  TypeService sut;
 
   @Mock TypeJpaRepository typeJpaRepository;
 

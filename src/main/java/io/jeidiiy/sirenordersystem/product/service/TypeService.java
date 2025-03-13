@@ -1,8 +1,8 @@
-package io.jeidiiy.sirenordersystem.type.service;
+package io.jeidiiy.sirenordersystem.product.service;
 
-import io.jeidiiy.sirenordersystem.type.domain.Category;
-import io.jeidiiy.sirenordersystem.type.domain.dto.TypeResponseDto;
-import io.jeidiiy.sirenordersystem.type.repository.TypeJpaRepository;
+import io.jeidiiy.sirenordersystem.product.domain.Category;
+import io.jeidiiy.sirenordersystem.product.domain.dto.TypeResponseDto;
+import io.jeidiiy.sirenordersystem.product.repository.TypeJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

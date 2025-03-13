@@ -1,6 +1,5 @@
-package io.jeidiiy.sirenordersystem.type.domain;
+package io.jeidiiy.sirenordersystem.product.domain;
 
-import io.jeidiiy.sirenordersystem.product.domain.Product;
 import jakarta.persistence.*;
 import java.util.Objects;
 import lombok.Getter;

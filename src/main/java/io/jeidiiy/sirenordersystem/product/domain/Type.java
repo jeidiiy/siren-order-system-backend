@@ -1,4 +1,4 @@
-package io.jeidiiy.sirenordersystem.type.domain;
+package io.jeidiiy.sirenordersystem.product.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;

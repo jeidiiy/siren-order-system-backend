@@ -1,4 +1,4 @@
-package io.jeidiiy.sirenordersystem.type.domain;
+package io.jeidiiy.sirenordersystem.product.domain;
 
 public enum Category {
   BEVERAGE,

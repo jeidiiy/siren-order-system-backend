@@ -1,4 +1,4 @@
-package io.jeidiiy.sirenordersystem.type.controller;
+package io.jeidiiy.sirenordersystem.product.controller;
 
 import static org.mockito.BDDMockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -10,10 +10,10 @@ import io.jeidiiy.sirenordersystem.jwt.filter.JwtAuthenticationFilter;
 import io.jeidiiy.sirenordersystem.jwt.service.JwtAuthenticationEntryPoint;
 import io.jeidiiy.sirenordersystem.jwt.service.JwtLogoutSuccessHandler;
 import io.jeidiiy.sirenordersystem.jwt.service.JwtService;
-import io.jeidiiy.sirenordersystem.type.domain.Category;
-import io.jeidiiy.sirenordersystem.type.domain.Type;
-import io.jeidiiy.sirenordersystem.type.domain.dto.TypeResponseDto;
-import io.jeidiiy.sirenordersystem.type.service.TypeService;
+import io.jeidiiy.sirenordersystem.product.domain.Category;
+import io.jeidiiy.sirenordersystem.product.domain.Type;
+import io.jeidiiy.sirenordersystem.product.domain.dto.TypeResponseDto;
+import io.jeidiiy.sirenordersystem.product.service.TypeService;
 import io.jeidiiy.sirenordersystem.user.service.UserService;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;

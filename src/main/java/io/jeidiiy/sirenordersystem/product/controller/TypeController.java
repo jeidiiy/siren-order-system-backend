@@ -1,8 +1,8 @@
-package io.jeidiiy.sirenordersystem.type.controller;
+package io.jeidiiy.sirenordersystem.product.controller;
 
-import io.jeidiiy.sirenordersystem.type.domain.Category;
-import io.jeidiiy.sirenordersystem.type.domain.dto.TypeResponseDto;
-import io.jeidiiy.sirenordersystem.type.service.TypeService;
+import io.jeidiiy.sirenordersystem.product.domain.Category;
+import io.jeidiiy.sirenordersystem.product.domain.dto.TypeResponseDto;
+import io.jeidiiy.sirenordersystem.product.service.TypeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,6 +1,6 @@
-package io.jeidiiy.sirenordersystem.type.domain.dto;
+package io.jeidiiy.sirenordersystem.product.domain.dto;
 
-import io.jeidiiy.sirenordersystem.type.domain.Type;
+import io.jeidiiy.sirenordersystem.product.domain.Type;
 
 public record TypeResponseDto(String title, String description) {
   public static TypeResponseDto from(Type type) {

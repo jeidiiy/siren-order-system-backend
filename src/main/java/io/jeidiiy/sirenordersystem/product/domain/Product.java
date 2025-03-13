@@ -3,7 +3,6 @@ package io.jeidiiy.sirenordersystem.product.domain;
 import io.jeidiiy.sirenordersystem.product.domain.beverage.Beverage;
 import io.jeidiiy.sirenordersystem.product.domain.food.Food;
 import io.jeidiiy.sirenordersystem.product.domain.merchandise.Merchandise;
-import io.jeidiiy.sirenordersystem.type.domain.Category;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
