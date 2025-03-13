@@ -7,12 +7,12 @@ import lombok.ToString;
 
 @Getter
 @ToString
-@Table(name = "order_menu_options")
+@Table(name = "order_product_options")
 @Entity
 public class OrderProductOption {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer orderMenuOptionId;
+  private Integer id;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @ToString.Exclude
@@ -35,8 +35,8 @@ public class OrderProductOption {
     if (o == null || getClass() != o.getClass()) return false;
     OrderProductOption that = (OrderProductOption) o;
 
-    if (that.getOrderMenuOptionId() != null) {
-      return Objects.equals(getOrderMenuOptionId(), that.getOrderMenuOptionId());
+    if (that.getId() != null) {
+      return Objects.equals(getId(), that.getId());
     }
 
     return Objects.equals(getOrderProduct(), that.getOrderProduct())
@@ -48,8 +48,8 @@ public class OrderProductOption {
 
   @Override
   public int hashCode() {
-    if (getOrderMenuOptionId() != null) {
-      return Objects.hash(getOrderMenuOptionId());
+    if (getId() != null) {
+      return Objects.hash(getId());
     }
 
     return Objects.hash(

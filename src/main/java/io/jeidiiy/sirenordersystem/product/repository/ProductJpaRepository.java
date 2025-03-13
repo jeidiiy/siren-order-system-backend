@@ -8,6 +8,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ProductJpaRepository extends JpaRepository<Product, Integer> {
-  @Query("SELECT p FROM Product p JOIN ProductType tp ON tp.product.productId = p.productId WHERE tp.type.typeId = :typeId")
+  @Query("SELECT p FROM Product p JOIN ProductType tp ON tp.product.id = p.id WHERE tp.type.id = :typeId")
   List<Product> findAllByTypeProductsTypeId(@Param("typeId") Integer typeId);
 }

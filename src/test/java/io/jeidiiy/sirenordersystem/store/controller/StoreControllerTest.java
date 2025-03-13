@@ -81,7 +81,7 @@ class StoreControllerTest {
     // given
     Integer storeId = 1;
     Store store = stores.get(storeId);
-    ReflectionTestUtils.setField(store, "storeId", storeId);
+    ReflectionTestUtils.setField(store, "id", storeId);
     given(storeService.findStoreById(storeId)).willReturn(StoreResponseDto.from(store));
 
     // when & then
@@ -113,7 +113,7 @@ class StoreControllerTest {
     String username = "loginUsername";
     Store store = stores.get(storeId);
     User admin = User.builder().username(username).build();
-    ReflectionTestUtils.setField(store, "storeId", storeId);
+    ReflectionTestUtils.setField(store, "id", storeId);
     ReflectionTestUtils.setField(store, "user", admin);
     JwtToken jwtToken = jwtService.generateJwtToken(username);
     willDoNothing()
@@ -139,7 +139,7 @@ class StoreControllerTest {
     Store store = stores.get(storeId);
     User admin = User.builder().username(anotherUsername).build();
     ReflectionTestUtils.setField(admin, "role", Role.ADMIN);
-    ReflectionTestUtils.setField(store, "storeId", storeId);
+    ReflectionTestUtils.setField(store, "id", storeId);
     ReflectionTestUtils.setField(store, "user", admin);
     JwtToken jwtToken = jwtService.generateJwtToken(loginUsername);
 
@@ -167,7 +167,7 @@ class StoreControllerTest {
     String username = "loginUsername";
     Store store = stores.get(storeId);
     User admin = User.builder().username(username).build();
-    ReflectionTestUtils.setField(store, "storeId", storeId);
+    ReflectionTestUtils.setField(store, "id", storeId);
     ReflectionTestUtils.setField(store, "user", admin);
     JwtToken jwtToken = jwtService.generateJwtToken(username);
     StorePutRequestBody requestBody =
@@ -207,7 +207,7 @@ class StoreControllerTest {
     String anotherUsername = "anotherUsername";
     Store store = stores.get(storeId);
     User admin = User.builder().username(anotherUsername).build();
-    ReflectionTestUtils.setField(store, "storeId", storeId);
+    ReflectionTestUtils.setField(store, "id", storeId);
     ReflectionTestUtils.setField(store, "user", admin);
     JwtToken jwtToken = jwtService.generateJwtToken(username);
     StorePutRequestBody requestBody =

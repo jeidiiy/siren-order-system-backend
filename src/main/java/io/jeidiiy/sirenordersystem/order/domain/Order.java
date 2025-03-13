@@ -14,7 +14,7 @@ import lombok.ToString;
 public class Order {
   @Id
   @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
-  private Integer orderId;
+  private Integer id;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @ToString.Exclude
@@ -35,8 +35,8 @@ public class Order {
     if (o == null || getClass() != o.getClass()) return false;
     Order order = (Order) o;
 
-    if (order.getOrderId() != null) {
-      return Objects.equals(getOrderId(), order.getOrderId());
+    if (order.getId() != null) {
+      return Objects.equals(getId(), order.getId());
     }
 
     return Objects.equals(getUser(), order.getUser())
@@ -47,8 +47,8 @@ public class Order {
 
   @Override
   public int hashCode() {
-    if (getOrderId() != null) {
-      return Objects.hash(getOrderId());
+    if (getId() != null) {
+      return Objects.hash(getId());
     }
 
     return Objects.hash(getUser(), getStore(), getTotalPrice(), getOrderStatus());

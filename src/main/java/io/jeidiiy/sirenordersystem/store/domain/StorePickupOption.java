@@ -12,7 +12,7 @@ import lombok.ToString;
 public class StorePickupOption {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer storePickupOptionId;
+  private Integer id;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "store_id")
@@ -29,8 +29,8 @@ public class StorePickupOption {
     if (o == null || getClass() != o.getClass()) return false;
     StorePickupOption that = (StorePickupOption) o;
 
-    if (that.getStorePickupOptionId() != null) {
-      return Objects.equals(getStorePickupOptionId(), that.getStorePickupOptionId());
+    if (that.getId() != null) {
+      return Objects.equals(getId(), that.getId());
     }
 
     return Objects.equals(getStore(), that.getStore())
@@ -39,8 +39,8 @@ public class StorePickupOption {
 
   @Override
   public int hashCode() {
-    if (getStorePickupOptionId() != null) {
-      return Objects.hash(getStorePickupOptionId());
+    if (getId() != null) {
+      return Objects.hash(getId());
     }
 
     return Objects.hash(getStore(), getPickupOption());

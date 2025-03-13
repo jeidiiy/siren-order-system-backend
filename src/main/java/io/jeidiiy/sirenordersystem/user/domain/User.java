@@ -19,7 +19,7 @@ import org.hibernate.annotations.SQLRestriction;
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer userId;
+  private Integer id;
 
   @Setter
   @Column(nullable = false)
@@ -57,8 +57,8 @@ public class User {
     if (o == null || getClass() != o.getClass()) return false;
     User user = (User) o;
 
-    if (user.getUserId() != null) {
-      return Objects.equals(getUserId(), user.getUserId());
+    if (user.getId() != null) {
+      return Objects.equals(getId(), user.getId());
     }
 
     return Objects.equals(getUsername(), user.getUsername())
@@ -70,8 +70,8 @@ public class User {
 
   @Override
   public int hashCode() {
-    if (getUserId() != null) {
-      return Objects.hash(getUserId());
+    if (getId() != null) {
+      return Objects.hash(getId());
     }
     return Objects.hash(getUsername(), getPassword(), getRealname(), getNickname(), getRole());
   }

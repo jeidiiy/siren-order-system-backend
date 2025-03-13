@@ -28,7 +28,7 @@ import java.util.Objects;
 public class Type {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer typeId;
+  private Integer id;
 
   @Column private String title;
 
@@ -53,8 +53,8 @@ public class Type {
     if (o == null || getClass() != o.getClass()) return false;
     Type type = (Type) o;
 
-    if (type.getTypeId() != null) {
-      return Objects.equals(getTypeId(), type.getTypeId());
+    if (type.getId() != null) {
+      return Objects.equals(getId(), type.getId());
     }
 
     return Objects.equals(getTitle(), type.getTitle())
@@ -64,8 +64,8 @@ public class Type {
 
   @Override
   public int hashCode() {
-    if (getTypeId() != null) {
-      return Objects.hash(getTypeId());
+    if (getId() != null) {
+      return Objects.hash(getId());
     }
 
     return Objects.hash(getTitle(), getDescription(), getCategory());

@@ -18,7 +18,7 @@ import lombok.ToString;
 public class Store {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer storeId;
+  private Integer id;
 
   @Setter @Column private String name;
 
@@ -82,8 +82,8 @@ public class Store {
     if (o == null || getClass() != o.getClass()) return false;
     Store store = (Store) o;
 
-    if (store.getStoreId() != null) {
-      return Objects.equals(storeId, store.getStoreId());
+    if (store.getId() != null) {
+      return Objects.equals(getId(), store.getId());
     }
 
     return Objects.equals(getName(), store.getName())
@@ -99,8 +99,8 @@ public class Store {
 
   @Override
   public int hashCode() {
-    if (getStoreId() != null) {
-      return Objects.hash(getStoreId());
+    if (getId() != null) {
+      return Objects.hash(getId());
     }
 
     return Objects.hash(

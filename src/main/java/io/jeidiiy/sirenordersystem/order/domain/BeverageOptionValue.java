@@ -12,7 +12,7 @@ import lombok.ToString;
 public class BeverageOptionValue {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer orderMenuOptionId;
+  private Integer id;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @ToString.Exclude
@@ -28,8 +28,8 @@ public class BeverageOptionValue {
     if (o == null || getClass() != o.getClass()) return false;
     BeverageOptionValue that = (BeverageOptionValue) o;
 
-    if (that.getOrderMenuOptionId() != null) {
-      return Objects.equals(getOrderMenuOptionId(), that.getOrderMenuOptionId());
+    if (that.getId() != null) {
+      return Objects.equals(getId(), that.getId());
     }
 
     return Objects.equals(getBeverageOption(), that.getBeverageOption())
@@ -39,8 +39,8 @@ public class BeverageOptionValue {
 
   @Override
   public int hashCode() {
-    if (getOrderMenuOptionId() != null) {
-      return Objects.hash(getOrderMenuOptionId());
+    if (getId() != null) {
+      return Objects.hash(getId());
     }
 
     return Objects.hash(getBeverageOption(), getValue(), getExtraPrice());

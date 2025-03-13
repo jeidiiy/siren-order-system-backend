@@ -12,7 +12,7 @@ import lombok.ToString;
 public class ProductType {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer productTypeId;
+  private Integer id;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @ToString.Exclude
@@ -27,8 +27,8 @@ public class ProductType {
     if (o == null || getClass() != o.getClass()) return false;
     ProductType productType = (ProductType) o;
 
-    if (productType.getProductTypeId() != null) {
-      return Objects.equals(getProductTypeId(), productType.getProductTypeId());
+    if (productType.getId() != null) {
+      return Objects.equals(getId(), productType.getId());
     }
 
     return Objects.equals(getType(), productType.getType())
@@ -37,8 +37,8 @@ public class ProductType {
 
   @Override
   public int hashCode() {
-    if (getProductTypeId() != null) {
-      return Objects.hash(getProductTypeId());
+    if (getId() != null) {
+      return Objects.hash(getId());
     }
 
     return Objects.hash(getType(), getProduct());

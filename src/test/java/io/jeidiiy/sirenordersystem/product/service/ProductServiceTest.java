@@ -43,19 +43,19 @@ class ProductServiceTest {
             Type.of("추천", "Recommend", Category.BEVERAGE),
             Type.of("에스프레소", "Espresso", Category.BEVERAGE));
     ProductType productType1 = new ProductType();
-    ReflectionTestUtils.setField(productType1, "typeProductId", 1);
+    ReflectionTestUtils.setField(productType1, "id", 1);
     ReflectionTestUtils.setField(productType1, "type", types.get(2)); // 에스프레소
     ReflectionTestUtils.setField(productType1, "product", products.get(0)); // 아메리카노
     ProductType productType2 = new ProductType();
-    ReflectionTestUtils.setField(productType2, "typeProductId", 2);
+    ReflectionTestUtils.setField(productType2, "id", 2);
     ReflectionTestUtils.setField(productType2, "type", types.get(1)); // 추천
     ReflectionTestUtils.setField(productType2, "product", products.get(0)); // 아메리카노
     ProductType productType3 = new ProductType();
-    ReflectionTestUtils.setField(productType3, "typeProductId", 2);
+    ReflectionTestUtils.setField(productType3, "id", 2);
     ReflectionTestUtils.setField(productType3, "type", types.get(0)); // NEW
     ReflectionTestUtils.setField(productType3, "product", products.get(1)); // 카페라떼
     ProductType productType4 = new ProductType();
-    ReflectionTestUtils.setField(productType4, "typeProductId", 2);
+    ReflectionTestUtils.setField(productType4, "id", 2);
     ReflectionTestUtils.setField(productType4, "type", types.get(2)); // 에스프레소
     ReflectionTestUtils.setField(productType4, "product", products.get(1)); // 카페라떼
     List<ProductType> productTypes =

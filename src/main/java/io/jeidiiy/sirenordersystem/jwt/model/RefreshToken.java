@@ -18,7 +18,7 @@ import lombok.*;
 public class RefreshToken {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer refreshTokenId;
+  private Integer id;
 
   @OneToOne
   @JoinColumn(name = "user_id")
@@ -36,8 +36,8 @@ public class RefreshToken {
     if (o == null || getClass() != o.getClass()) return false;
     RefreshToken that = (RefreshToken) o;
 
-    if (that.getRefreshTokenId() != null) {
-      return Objects.equals(refreshTokenId, that.getRefreshTokenId());
+    if (that.getId() != null) {
+      return Objects.equals(id, that.getId());
     }
 
     return Objects.equals(getUser(), that.getUser())
@@ -47,8 +47,8 @@ public class RefreshToken {
 
   @Override
   public int hashCode() {
-    if (getRefreshTokenId() != null) {
-      return Objects.hash(getRefreshTokenId());
+    if (getId() != null) {
+      return Objects.hash(getId());
     }
     return Objects.hash(getUser(), getToken(), getExpiryDate());
   }

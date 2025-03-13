@@ -16,7 +16,7 @@ public record StoreResponseDto(
     List<PickupOptionResponseDto> pickupOptionsResponseDto) {
   public static StoreResponseDto from(Store store) {
     return StoreResponseDto.builder()
-        .storeId(store.getStoreId())
+        .storeId(store.getId())
         .storeName(store.getName())
         .contactNumber(store.getContactNumber())
         .openAt(store.getOpenAt())

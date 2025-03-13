@@ -19,7 +19,7 @@ import lombok.ToString;
 public abstract class Product {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer productId;
+  private Integer id;
 
   @Column(length = 50, nullable = false)
   private String krName;
