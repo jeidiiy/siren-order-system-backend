@@ -50,9 +50,9 @@ class TypeControllerTest {
             Type.of("NEW", "", Category.FOOD),
             Type.of("추천", "Recommend", Category.FOOD),
             Type.of("샌드위치", "Sandwich", Category.FOOD),
-            Type.of("NEW", "", Category.PRODUCT),
-            Type.of("추천", "Recommend", Category.PRODUCT),
-            Type.of("머그/글라스", "Mug/Glass", Category.PRODUCT));
+            Type.of("NEW", "", Category.MERCHANDISE),
+            Type.of("추천", "Recommend", Category.MERCHANDISE),
+            Type.of("머그/글라스", "Mug/Glass", Category.MERCHANDISE));
   }
 
   @DisplayName("[GET] 주어진 카테고리로 종류 조회 -> 200 OK [성공]")

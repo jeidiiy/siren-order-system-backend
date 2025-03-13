@@ -19,12 +19,12 @@ VALUES (1, 1, 1),
        (4, 1, 4);
 
 INSERT INTO types (type_id, title, description, category)
-VALUES (1, "NEW", "", 'BEVERAGE'),
-       (2, "추천", "Recommend", 'BEVERAGE'),
-       (3, "에스프레소", "Espresso", 'BEVERAGE'),
-       (4, "NEW", "", 'FOOD'),
-       (5, "추천", "Recommend", 'FOOD'),
-       (6, "샌드위치", "Sandwich", 'FOOD'),
-       (7, "NEW", "", 'PRODUCT'),
-       (8, "추천", "Recommend", 'PRODUCT'),
-       (9, "머그/글라스", "Mug/Glass", 'PRODUCT');
+VALUES (1, 'NEW', '', 'BEVERAGE'),
+       (2, '추천', 'Recommend', 'BEVERAGE'),
+       (3, '에스프레소', 'Espresso', 'BEVERAGE'),
+       (4, 'NEW', '', 'FOOD'),
+       (5, '추천', 'Recommend', 'FOOD'),
+       (6, '샌드위치', 'Sandwich', 'FOOD'),
+       (7, 'NEW', '', 'MERCHANDISE'),
+       (8, '추천', 'Recommend', 'MERCHANDISE'),
+       (9, '머그/글라스', 'Mug/Glass', 'MERCHANDISE');

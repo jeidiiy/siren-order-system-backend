@@ -9,14 +9,14 @@ import lombok.ToString;
 @ToString
 @Table(name = "order_menu_options")
 @Entity
-public class OrderMenuOption {
+public class OrderProductOption {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer orderMenuOptionId;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @ToString.Exclude
-  private OrderMenu orderMenu;
+  private OrderProduct orderProduct;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @ToString.Exclude
@@ -33,13 +33,13 @@ public class OrderMenuOption {
   @Override
   public boolean equals(Object o) {
     if (o == null || getClass() != o.getClass()) return false;
-    OrderMenuOption that = (OrderMenuOption) o;
+    OrderProductOption that = (OrderProductOption) o;
 
     if (that.getOrderMenuOptionId() != null) {
       return Objects.equals(getOrderMenuOptionId(), that.getOrderMenuOptionId());
     }
 
-    return Objects.equals(getOrderMenu(), that.getOrderMenu())
+    return Objects.equals(getOrderProduct(), that.getOrderProduct())
         && Objects.equals(getBeverageOption(), that.getBeverageOption())
         && Objects.equals(getBeverageOptionValue(), that.getBeverageOptionValue())
         && Objects.equals(getQuantity(), that.getQuantity())
@@ -53,7 +53,7 @@ public class OrderMenuOption {
     }
 
     return Objects.hash(
-        getOrderMenu(),
+        getOrderProduct(),
         getBeverageOption(),
         getBeverageOptionValue(),
         getQuantity(),
