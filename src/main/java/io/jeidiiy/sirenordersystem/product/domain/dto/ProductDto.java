@@ -2,11 +2,8 @@ package io.jeidiiy.sirenordersystem.product.domain.dto;
 
 import io.jeidiiy.sirenordersystem.product.domain.Category;
 import io.jeidiiy.sirenordersystem.product.domain.Product;
-import io.jeidiiy.sirenordersystem.product.domain.beverage.Beverage;
 import io.jeidiiy.sirenordersystem.product.domain.beverage.dto.BeverageDto;
-import io.jeidiiy.sirenordersystem.product.domain.food.Food;
 import io.jeidiiy.sirenordersystem.product.domain.food.dto.FoodDto;
-import io.jeidiiy.sirenordersystem.product.domain.merchandise.Merchandise;
 import io.jeidiiy.sirenordersystem.product.domain.merchandise.dto.MerchandiseDto;
 import lombok.*;
 

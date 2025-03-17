@@ -9,7 +9,6 @@ import io.jeidiiy.sirenordersystem.order.repository.OrderJpaRepository;
 import io.jeidiiy.sirenordersystem.product.domain.Product;
 import io.jeidiiy.sirenordersystem.product.domain.beverage.dto.BeverageDto;
 import io.jeidiiy.sirenordersystem.product.domain.dto.ProductDto;
-import io.jeidiiy.sirenordersystem.product.service.ProductService;
 import io.jeidiiy.sirenordersystem.store.domain.Store;
 import io.jeidiiy.sirenordersystem.store.service.StoreService;
 import io.jeidiiy.sirenordersystem.user.domain.User;

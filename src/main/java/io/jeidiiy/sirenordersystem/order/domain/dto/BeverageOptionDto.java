@@ -5,7 +5,6 @@ import io.jeidiiy.sirenordersystem.product.domain.beverage.decorator.cup.CupSize
 import io.jeidiiy.sirenordersystem.product.domain.beverage.decorator.temperature.Level;
 import io.jeidiiy.sirenordersystem.product.domain.beverage.decorator.water.Amount;
 import jakarta.validation.constraints.NotNull;
-
 import java.util.Map;
 
 public record BeverageOptionDto(

@@ -1,7 +1,5 @@
 package io.jeidiiy.sirenordersystem.product.domain.beverage.decorator;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.jeidiiy.sirenordersystem.product.domain.beverage.Beverage;
 import io.jeidiiy.sirenordersystem.product.domain.beverage.dto.BeverageDto;
 import lombok.Getter;
 

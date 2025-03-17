@@ -1,6 +1,5 @@
 package io.jeidiiy.sirenordersystem.product.domain.beverage.decorator.bean;
 
-import io.jeidiiy.sirenordersystem.product.domain.beverage.Beverage;
 import io.jeidiiy.sirenordersystem.product.domain.beverage.decorator.BeverageDecorator;
 import io.jeidiiy.sirenordersystem.product.domain.beverage.dto.BeverageDto;
 

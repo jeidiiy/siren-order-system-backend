@@ -2,7 +2,6 @@ package io.jeidiiy.sirenordersystem.order.domain.dto;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-
 import java.util.List;
 
 public record OrderPostRequestBody(

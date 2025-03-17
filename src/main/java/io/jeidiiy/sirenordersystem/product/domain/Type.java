@@ -1,11 +1,10 @@
 package io.jeidiiy.sirenordersystem.product.domain;
 
 import jakarta.persistence.*;
+import java.util.Objects;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
-import java.util.Objects;
 
 /**
  * 같은 카테고리에 같은 제목이 여러 개 들어가지 않도록 제목과 카테고리를 묶어서 유니크 키 제약을 둠

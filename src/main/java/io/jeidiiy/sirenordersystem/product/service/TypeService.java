@@ -3,11 +3,10 @@ package io.jeidiiy.sirenordersystem.product.service;
 import io.jeidiiy.sirenordersystem.product.domain.Category;
 import io.jeidiiy.sirenordersystem.product.domain.dto.TypeResponseDto;
 import io.jeidiiy.sirenordersystem.product.repository.TypeJpaRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Transactional
