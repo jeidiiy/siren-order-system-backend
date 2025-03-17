@@ -9,7 +9,6 @@ import io.jeidiiy.sirenordersystem.product.domain.Type;
 import io.jeidiiy.sirenordersystem.product.domain.dto.TypeResponseDto;
 import io.jeidiiy.sirenordersystem.product.repository.TypeJpaRepository;
 import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

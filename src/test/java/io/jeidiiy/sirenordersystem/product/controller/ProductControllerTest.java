@@ -1,17 +1,21 @@
 package io.jeidiiy.sirenordersystem.product.controller;
 
+import static org.mockito.BDDMockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jeidiiy.sirenordersystem.config.SecurityConfig;
 import io.jeidiiy.sirenordersystem.jwt.filter.JwtAuthenticationFilter;
 import io.jeidiiy.sirenordersystem.jwt.service.JwtAuthenticationEntryPoint;
 import io.jeidiiy.sirenordersystem.jwt.service.JwtLogoutSuccessHandler;
 import io.jeidiiy.sirenordersystem.jwt.service.JwtService;
+import io.jeidiiy.sirenordersystem.product.domain.Category;
 import io.jeidiiy.sirenordersystem.product.domain.Product;
+import io.jeidiiy.sirenordersystem.product.domain.ProductType;
+import io.jeidiiy.sirenordersystem.product.domain.Type;
 import io.jeidiiy.sirenordersystem.product.domain.dto.ProductResponseDto;
 import io.jeidiiy.sirenordersystem.product.service.ProductService;
-import io.jeidiiy.sirenordersystem.product.domain.Category;
-import io.jeidiiy.sirenordersystem.product.domain.Type;
-import io.jeidiiy.sirenordersystem.product.domain.ProductType;
 import io.jeidiiy.sirenordersystem.user.service.UserService;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,10 +27,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
-
-import static org.mockito.BDDMockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("[Controller] 상품 컨트롤러 테스트")
 @Import({SecurityConfig.class, JwtAuthenticationFilter.class, JwtService.class})
@@ -47,9 +47,9 @@ class ProductControllerTest {
   void setup() {
     products =
         List.of(
-            Product.of("아메리카노", "Americano", "쌉싸름한 커피", 4500, "아메리카노이미지", Category.BEVERAGE),
-            Product.of("카페라떼", "Caffe Latte", "고소한 커피", 5000, "카페라떼이미지", Category.BEVERAGE),
-            Product.of("샌드위치", "Sandwich", "샌드위치", 5700, "샌드위치이미지", Category.FOOD));
+            Product.of(1, "아메리카노", "Americano", "쌉싸름한 커피", 4500, "아메리카노이미지", Category.BEVERAGE),
+            Product.of(2, "카페라떼", "Caffe Latte", "고소한 커피", 5000, "카페라떼이미지", Category.BEVERAGE),
+            Product.of(3, "샌드위치", "Sandwich", "샌드위치", 5700, "샌드위치이미지", Category.FOOD));
     // 아래 데이터들은 테스트에 영향은 없지만 관계를 나타내기 위해 작성함
     List<Type> types =
         List.of(

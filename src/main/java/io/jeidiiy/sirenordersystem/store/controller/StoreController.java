@@ -4,9 +4,8 @@ import io.jeidiiy.sirenordersystem.store.domain.dto.StorePutRequestBody;
 import io.jeidiiy.sirenordersystem.store.domain.dto.StoreResponseDto;
 import io.jeidiiy.sirenordersystem.store.service.StoreService;
 import io.jeidiiy.sirenordersystem.user.domain.dto.AuthenticationUser;
-import java.util.List;
-
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

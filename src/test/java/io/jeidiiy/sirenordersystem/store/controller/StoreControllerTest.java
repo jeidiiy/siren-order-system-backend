@@ -21,16 +21,11 @@ import io.jeidiiy.sirenordersystem.store.service.StoreService;
 import io.jeidiiy.sirenordersystem.user.domain.Role;
 import io.jeidiiy.sirenordersystem.user.domain.User;
 import io.jeidiiy.sirenordersystem.user.service.UserService;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;

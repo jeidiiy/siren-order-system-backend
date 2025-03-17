@@ -1,7 +1,7 @@
 package io.jeidiiy.sirenordersystem.product.domain.merchandise;
 
-import io.jeidiiy.sirenordersystem.product.domain.Product;
 import io.jeidiiy.sirenordersystem.product.domain.Category;
+import io.jeidiiy.sirenordersystem.product.domain.Product;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.AccessLevel;
@@ -12,7 +12,12 @@ import lombok.NoArgsConstructor;
 @DiscriminatorValue("MERCHANDISE")
 public class Merchandise extends Product {
   public Merchandise(
-      String krName, String enName, String description, Integer basePrice, String imageUrl) {
-    super(krName, enName, description, basePrice, imageUrl, Category.MERCHANDISE);
+      Integer id,
+      String krName,
+      String enName,
+      String description,
+      Integer basePrice,
+      String imageUrl) {
+    super(id, krName, enName, description, basePrice, imageUrl, Category.MERCHANDISE);
   }
 }

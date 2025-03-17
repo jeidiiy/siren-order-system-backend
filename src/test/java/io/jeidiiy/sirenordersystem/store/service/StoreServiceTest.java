@@ -10,7 +10,6 @@ import io.jeidiiy.sirenordersystem.store.exception.StoreNotFoundException;
 import io.jeidiiy.sirenordersystem.store.repository.StoreJpaRepository;
 import java.util.List;
 import java.util.Optional;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

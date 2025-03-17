@@ -1,12 +1,13 @@
 package io.jeidiiy.sirenordersystem.product.domain.merchandise.decorator;
 
-import io.jeidiiy.sirenordersystem.product.domain.merchandise.Merchandise;
+import io.jeidiiy.sirenordersystem.product.domain.merchandise.dto.MerchandiseDto;
 
-public abstract class MerchandiseDecorator extends Merchandise {
-  protected final Merchandise decoratedMerchandise;
+public abstract class MerchandiseDecorator extends MerchandiseDto {
+  protected final MerchandiseDto decoratedMerchandise;
 
-  public MerchandiseDecorator(Merchandise merchandise) {
+  public MerchandiseDecorator(MerchandiseDto merchandise) {
     super(
+        merchandise.getId(),
         merchandise.getKrName(),
         merchandise.getEnName(),
         merchandise.getDescription(),

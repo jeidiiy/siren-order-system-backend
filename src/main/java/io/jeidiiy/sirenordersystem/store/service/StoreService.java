@@ -27,10 +27,14 @@ public class StoreService {
 
   @Transactional(readOnly = true)
   public StoreResponseDto findStoreById(Integer storeId) {
-    return StoreResponseDto.from(
-        storeJpaRepository
+    return StoreResponseDto.from(findById(storeId));
+  }
+
+  @Transactional(readOnly = true)
+  public Store findById(Integer storeId) {
+    return storeJpaRepository
             .findById(storeId)
-            .orElseThrow(() -> new StoreNotFoundException(storeId)));
+            .orElseThrow(() -> new StoreNotFoundException(storeId));
   }
 
   public void toggleStoreIsOpenByStoreIdAndLoginUserUsername(

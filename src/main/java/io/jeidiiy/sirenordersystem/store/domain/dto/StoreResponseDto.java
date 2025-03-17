@@ -2,9 +2,8 @@ package io.jeidiiy.sirenordersystem.store.domain.dto;
 
 import io.jeidiiy.sirenordersystem.store.domain.Store;
 import io.jeidiiy.sirenordersystem.store.domain.StorePickupOption;
-import lombok.Builder;
-
 import java.util.List;
+import lombok.Builder;
 
 @Builder
 public record StoreResponseDto(

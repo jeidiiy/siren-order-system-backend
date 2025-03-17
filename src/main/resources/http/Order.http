@@ -1,0 +1,24 @@
+POST http://localhost:8080/api/v1/orders
+Content-Type: application/json
+Authorization: Bearer
+
+{
+  "storeId": 1,
+  "pickupOption": "to-go",
+  "orderProductDtos": [
+    {
+      "productId": 1,
+      "category": "BEVERAGE",
+      "quantity": 2,
+      "options": {
+        "beanType": "signature",
+        "cupSize": "tall",
+        "shots": 3,
+        "syrupOptions": {
+          "vanilla": 1,
+          "caramel": 2
+        }
+      }
+    }
+  ]
+}
