@@ -5,9 +5,12 @@ import io.jeidiiy.sirenordersystem.user.domain.User;
 import jakarta.persistence.*;
 import java.util.Objects;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @Getter
+@NoArgsConstructor
 @ToString
 @Table(name = "orders")
 @Entity
@@ -24,11 +27,21 @@ public class Order {
   @ToString.Exclude
   private Store store;
 
-  @Column private Integer totalPrice;
+  @Setter @Column private Integer totalPrice;
 
   @Enumerated(EnumType.STRING)
   @Column
   private OrderStatus orderStatus;
+
+  private Order(User user, Store store, OrderStatus orderStatus) {
+    this.user = user;
+    this.store = store;
+    this.orderStatus = orderStatus;
+  }
+
+  public static Order of(User user, Store store, OrderStatus orderStatus) {
+    return new Order(user, store, orderStatus);
+  }
 
   @Override
   public boolean equals(Object o) {
