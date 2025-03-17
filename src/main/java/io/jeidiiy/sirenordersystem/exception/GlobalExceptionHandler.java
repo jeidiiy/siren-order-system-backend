@@ -1,6 +1,7 @@
 package io.jeidiiy.sirenordersystem.exception;
 
 import io.jeidiiy.sirenordersystem.user.exception.UserAlreadyExistsException;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authorization.AuthorizationDeniedException;
@@ -47,7 +48,7 @@ public class GlobalExceptionHandler {
       MethodArgumentNotValidException e) {
     var errorMessage =
         e.getFieldErrors().stream()
-            .map(fieldError -> (fieldError.getField() + ": " + fieldError.getDefaultMessage()))
+            .map(DefaultMessageSourceResolvable::getDefaultMessage)
             .toList()
             .toString();
     return new ResponseEntity<>(
