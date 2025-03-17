@@ -4,10 +4,7 @@ import io.jeidiiy.sirenordersystem.product.domain.beverage.Beverage;
 import io.jeidiiy.sirenordersystem.product.domain.food.Food;
 import io.jeidiiy.sirenordersystem.product.domain.merchandise.Merchandise;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -41,12 +38,14 @@ public abstract class Product {
   private Category category;
 
   protected Product(
+      Integer id,
       String krName,
       String enName,
       String description,
       Integer basePrice,
       String imageUrl,
       Category category) {
+    this.id = id;
     this.krName = krName;
     this.enName = enName;
     this.description = description;
@@ -56,6 +55,7 @@ public abstract class Product {
   }
 
   public static Product of(
+      Integer id,
       String krName,
       String enName,
       String description,
@@ -63,9 +63,9 @@ public abstract class Product {
       String imageUrl,
       Category category) {
     return switch (category) {
-      case BEVERAGE -> new Beverage(krName, enName, description, basePrice, imageUrl);
-      case FOOD -> new Food(krName, enName, description, basePrice, imageUrl);
-      case MERCHANDISE -> new Merchandise(krName, enName, description, basePrice, imageUrl);
+      case BEVERAGE -> new Beverage(id, krName, enName, description, basePrice, imageUrl);
+      case FOOD -> new Food(id, krName, enName, description, basePrice, imageUrl);
+      case MERCHANDISE -> new Merchandise(id, krName, enName, description, basePrice, imageUrl);
     };
   }
 }

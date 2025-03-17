@@ -12,7 +12,12 @@ import lombok.NoArgsConstructor;
 @DiscriminatorValue("BEVERAGE")
 public class Beverage extends Product {
   public Beverage(
-      String krName, String enName, String description, Integer basePrice, String imageUrl) {
-    super(krName, enName, description, basePrice, imageUrl, Category.BEVERAGE);
+      Integer id,
+      String krName,
+      String enName,
+      String description,
+      Integer basePrice,
+      String imageUrl) {
+    super(id, krName, enName, description, basePrice, imageUrl, Category.BEVERAGE);
   }
 }

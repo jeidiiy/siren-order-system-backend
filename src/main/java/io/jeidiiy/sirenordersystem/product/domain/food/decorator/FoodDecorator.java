@@ -1,18 +1,19 @@
 package io.jeidiiy.sirenordersystem.product.domain.food.decorator;
 
-import io.jeidiiy.sirenordersystem.product.domain.food.Food;
+import io.jeidiiy.sirenordersystem.product.domain.food.dto.FoodDto;
 
-public abstract class FoodDecorator extends Food {
-  protected final Food decoratedFood;
+public abstract class FoodDecorator extends FoodDto {
+  protected final FoodDto decoratedFood;
 
-  public FoodDecorator(Food food) {
+  public FoodDecorator(FoodDto foodDto) {
     super(
-        food.getKrName(),
-        food.getEnName(),
-        food.getDescription(),
-        food.getBasePrice(),
-        food.getImageUrl());
-    this.decoratedFood = food;
+        foodDto.getId(),
+        foodDto.getKrName(),
+        foodDto.getEnName(),
+        foodDto.getDescription(),
+        foodDto.getBasePrice(),
+        foodDto.getImageUrl());
+    this.decoratedFood = foodDto;
   }
 
   @Override
