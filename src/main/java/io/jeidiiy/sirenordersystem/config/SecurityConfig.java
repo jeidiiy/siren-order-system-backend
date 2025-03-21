@@ -9,6 +9,7 @@ import io.jeidiiy.sirenordersystem.jwt.service.JwtLogoutSuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,6 +17,11 @@ import org.springframework.security.config.annotation.web.configurers.CsrfConfig
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
@@ -48,11 +54,24 @@ public class SecurityConfig {
         .sessionManagement(
             session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .csrf(CsrfConfigurer::disable)
+        .cors(Customizer.withDefaults())
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
         .exceptionHandling(
             exceptionHandler ->
                 exceptionHandler.authenticationEntryPoint(jwtAuthenticationEntryPoint))
         .logout(logout -> logout.logoutSuccessHandler(jwtLogoutSuccessHandler))
         .build();
+  }
+
+  @Bean
+  public CorsConfigurationSource corsConfigurationSource() {
+    CorsConfiguration corsConfiguration = new CorsConfiguration();
+    corsConfiguration.setAllowedOrigins(List.of("http://localhost:3000", "http://127.0.0.1:3000"));
+    corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE"));
+    corsConfiguration.setAllowedHeaders(List.of("*"));
+    corsConfiguration.addExposedHeader("Authorization");
+    var source = new UrlBasedCorsConfigurationSource();
+    source.registerCorsConfiguration("/api/v1/**", corsConfiguration);
+    return source;
   }
 }
