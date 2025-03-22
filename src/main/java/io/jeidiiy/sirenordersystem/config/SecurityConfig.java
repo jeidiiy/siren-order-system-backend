@@ -49,6 +49,11 @@ public class SecurityConfig {
                     .permitAll()
                     .requestMatchers(GET, "/api/v1/products/**") // 상품 목록 조회 API
                     .permitAll()
+                    .requestMatchers(
+                        "/swagger-ui/**") // TODO: 스웨거 페이지. 개발 편의성을 위해 오픈해둠. 배포 시 제거해야 함.
+                    .permitAll()
+                    .requestMatchers("/v3/api-docs/**") // TODO: 스웨거에서 요청하는 URL. 이도 위 옵션과 동일.
+                    .permitAll()
                     .anyRequest()
                     .authenticated())
         .sessionManagement(

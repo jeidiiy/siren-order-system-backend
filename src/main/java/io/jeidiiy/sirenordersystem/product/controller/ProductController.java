@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/products")
 @RestController
-public class ProductController {
+public class ProductController implements ProductControllerDocs {
   private final ProductService productService;
 
   @GetMapping
