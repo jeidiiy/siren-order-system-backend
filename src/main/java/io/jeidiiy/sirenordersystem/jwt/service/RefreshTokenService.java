@@ -29,7 +29,8 @@ public class RefreshTokenService {
 
   public String refreshAccessToken(String accessToken, String refreshToken) {
     // 1. Access Token 이 유효한지 확인. 유효하면 예외 발생
-    if (jwtService.validateToken(accessToken)) {
+    // accessToken 이 비어있다면 스토어 상태 초기화로 인한 요청으로 간주하고 패스
+    if (!accessToken.isEmpty() && jwtService.validateToken(accessToken)) {
       throw new ValidAccessTokenException("액세스 토큰이 유효합니다. 새로운 액세스 토큰을 발급할 수 없습니다.");
     }
 
