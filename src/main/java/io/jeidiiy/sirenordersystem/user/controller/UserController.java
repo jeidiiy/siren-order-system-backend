@@ -6,6 +6,8 @@ import io.jeidiiy.sirenordersystem.user.domain.dto.UserLoginRequestBody;
 import io.jeidiiy.sirenordersystem.user.domain.dto.UserPatchRequestBody;
 import io.jeidiiy.sirenordersystem.user.domain.dto.UserPostRequestBody;
 import io.jeidiiy.sirenordersystem.user.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.time.Duration;
 import lombok.RequiredArgsConstructor;
@@ -20,25 +22,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "사용자 API")
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/users")
 @RestController
-public class UserController {
+public class UserController implements UserControllerDocs{
 
   private final UserService userService;
 
+  @Operation(summary = "회원가입")
   @PostMapping
   public ResponseEntity<Void> signUp(@RequestBody @Valid UserPostRequestBody userPostRequestBody) {
     userService.signUp(userPostRequestBody);
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 
+  @Operation(summary = "본인 정보 조회")
   @PreAuthorize("#username == authentication.name")
   @GetMapping("/{username}")
   public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
     return ResponseEntity.ok(userService.getUserByUsername(username));
   }
 
+  @Operation(summary = "본인 정보 수정")
   @PreAuthorize("#username == authentication.name")
   @PatchMapping("/{username}")
   public ResponseEntity<Void> updateUserByUsername(
@@ -48,14 +54,15 @@ public class UserController {
     return ResponseEntity.ok().build();
   }
 
+  @Operation(summary = "회원탈퇴")
   @PreAuthorize("#username == authentication.name")
   @DeleteMapping("/{username}")
-  public ResponseEntity<Void> deleteUserByUsername(
-          @PathVariable String username) {
+  public ResponseEntity<Void> deleteUserByUsername(@PathVariable String username) {
     userService.deleteUserByUsername(username);
     return ResponseEntity.ok().build();
   }
 
+  @Operation(summary = "로그인")
   @PostMapping("/authenticate")
   public ResponseEntity<Void> authenticate(
       @Valid @RequestBody UserLoginRequestBody userLoginRequestBody) {

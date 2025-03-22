@@ -4,6 +4,9 @@ import io.jeidiiy.sirenordersystem.product.domain.Category;
 import io.jeidiiy.sirenordersystem.product.domain.dto.TypeResponseDto;
 import io.jeidiiy.sirenordersystem.product.service.TypeService;
 import java.util.List;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/types")
 @RestController
-public class TypeController {
+public class TypeController implements TypeControllerDocs {
 
   private final TypeService typeService;
 

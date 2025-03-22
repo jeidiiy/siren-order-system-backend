@@ -3,6 +3,9 @@ package io.jeidiiy.sirenordersystem.jwt.controller;
 import static io.jeidiiy.sirenordersystem.jwt.filter.JwtAuthenticationFilter.BEARER_PREFIX;
 
 import io.jeidiiy.sirenordersystem.jwt.service.RefreshTokenService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
@@ -12,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
 @RestController
-public class RefreshTokenController {
+public class RefreshTokenController implements RefreshTokenControllerDocs {
 
   private final RefreshTokenService refreshTokenService;
 
