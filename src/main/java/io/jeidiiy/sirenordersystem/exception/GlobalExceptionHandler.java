@@ -1,5 +1,6 @@
 package io.jeidiiy.sirenordersystem.exception;
 
+import io.jeidiiy.sirenordersystem.jwt.exception.RefreshTokenNotSetException;
 import io.jeidiiy.sirenordersystem.user.exception.UserAlreadyExistsException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+  @ExceptionHandler(RefreshTokenNotSetException.class)
+  public ResponseEntity<ErrorResponse> handleRefreshTokenNotSetException(
+      RefreshTokenNotSetException e) {
+    return new ResponseEntity<>(new ErrorResponse(e.getStatus(), e.getMessage()), e.getStatus());
+  }
+
   @ExceptionHandler(ClientErrorException.class)
   public ResponseEntity<ErrorResponse> handleClientErrorException(ClientErrorException e) {
     return new ResponseEntity<>(new ErrorResponse(e.getStatus(), e.getMessage()), e.getStatus());
