@@ -64,9 +64,7 @@ public class SecurityConfig {
         .exceptionHandling(
             exceptionHandler ->
                 exceptionHandler.authenticationEntryPoint(jwtAuthenticationEntryPoint))
-        .logout(
-            logout ->
-                logout.logoutUrl("/api/v1/logout").logoutSuccessHandler(jwtLogoutSuccessHandler))
+        .logout(logout -> logout.logoutSuccessHandler(jwtLogoutSuccessHandler))
         .build();
   }
 
