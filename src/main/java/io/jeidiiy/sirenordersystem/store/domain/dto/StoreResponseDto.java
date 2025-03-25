@@ -9,16 +9,17 @@ import lombok.Builder;
 @Builder
 public record StoreResponseDto(
     Integer storeId,
+    String imageUrl,
     String storeName,
     String address,
     String contactNumber,
     String openAt,
     String closeAt,
-    @JsonProperty("pickupOptions")
-    List<PickupOptionResponseDto> pickupOptionsResponseDto) {
+    @JsonProperty("pickupOptions") List<PickupOptionResponseDto> pickupOptionsResponseDto) {
   public static StoreResponseDto from(Store store) {
     return StoreResponseDto.builder()
         .storeId(store.getId())
+        .imageUrl(store.getImageUrl())
         .storeName(store.getName())
         .address(store.getAddress())
         .contactNumber(store.getContactNumber())
