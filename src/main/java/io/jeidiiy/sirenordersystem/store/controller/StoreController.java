@@ -5,6 +5,7 @@ import io.jeidiiy.sirenordersystem.store.domain.dto.StoreResponseDto;
 import io.jeidiiy.sirenordersystem.store.service.StoreService;
 import io.jeidiiy.sirenordersystem.user.domain.dto.AuthenticationUser;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -13,10 +14,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "매장 API")
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/stores")
 @RestController
-public class StoreController implements StoreControllerDocs {
+public class StoreController {
 
   private final StoreService storeService;
 
