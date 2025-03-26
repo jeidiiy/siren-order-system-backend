@@ -12,14 +12,46 @@ VALUES (1, '차량 픽업', '차에서 받을게요'),
 ALTER TABLE pickup_options AUTO_INCREMENT = 5;
 
 INSERT INTO stores (id, name, address, contact_number, open_at, close_at, user_id, is_open, image_url)
-VALUES (1, '대전유천DT', '대전광역시 중구 계백로1604(유천동)', '1522-3232', '07:00', '22:00', 3, true, '이미지1');
+VALUES (1, '대전유천DT', '대전광역시 중구 계백로1604(유천동)', '1522-3232', '07:00', '22:00', 3, true, 'https://images.unsplash.com/photo-1601813913455-118810e79277?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+       (2, '대전대사DT', '대전광역시 중구 계룡로 949(대사동)', '1522-3232', '07:00', '22:00', 3, true, 'https://images.unsplash.com/photo-1601813913455-118810e79277?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+       (3, '서대전네거리', '대전광역시 중구 계룡로 878(오류동), 1층', '1522-3232', '07:00', '22:00', 3, true, 'https://images.unsplash.com/photo-1601813913455-118810e79277?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+       (4, '대전태평', '대전광역시 중구 태평로 71(태평동)', '1522-3232', '07:00', '22:00', 3, true, 'https://images.unsplash.com/photo-1601813913455-118810e79277?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+       (5, '대전복수', '대전광역시 서구 복수남로 28(복수동)', '1522-3232', '07:00', '22:00', 3, true, 'https://images.unsplash.com/photo-1601813913455-118810e79277?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+       (6, '대전목동DT', '대전광역시 중구 동서대로 1387(목동)', '1522-3232', '07:00', '22:00', 3, true, 'https://images.unsplash.com/photo-1601813913455-118810e79277?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+       (7, '대전중앙로R', '대전광역시 중구 대종로486 (은행동)', '1522-3232', '07:00', '22:00', 3, true, 'https://images.unsplash.com/photo-1601813913455-118810e79277?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'),
+       (8, '은행동', '대전광역시 중구 중앙로164 (은행동)', '1522-3232', '07:00', '22:00', 3, true, 'https://images.unsplash.com/photo-1601813913455-118810e79277?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
 ALTER TABLE stores AUTO_INCREMENT = 2;
 
 INSERT INTO store_pickup_options (id, store_id, pickup_option_id)
 VALUES (1, 1, 1),
        (2, 1, 2),
        (3, 1, 3),
-       (4, 1, 4);
+       (4, 1, 4),
+       (5, 2, 2),
+       (6, 2, 3),
+       (7, 2, 4),
+       (8, 3, 1),
+       (9, 3, 2),
+       (10, 3, 4),
+       (11, 4, 1),
+       (12, 4, 2),
+       (13, 4, 3),
+       (14, 5, 1),
+       (15, 5, 2),
+       (16, 5, 3),
+       (17, 5, 4),
+       (18, 6, 1),
+       (19, 6, 2),
+       (20, 6, 3),
+       (21, 6, 4),
+       (22, 7, 1),
+       (23, 7, 2),
+       (24, 7, 3),
+       (25, 7, 4),
+       (26, 8, 1),
+       (27, 8, 2),
+       (28, 8, 3),
+       (29, 8, 4);
 ALTER TABLE store_pickup_options AUTO_INCREMENT = 5;
 
 INSERT INTO types (id, title, description, category)

@@ -12,8 +12,6 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 public final class UserPatchRequestBody {
-  @Username private String username;
-  @Password private String password;
   @Realname private String realname;
   @Nickname private String nickname;
 }

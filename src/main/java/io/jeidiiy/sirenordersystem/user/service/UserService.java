@@ -44,9 +44,7 @@ public class UserService implements UserDetailsService {
   public void updateUserByUsername(String username, UserPatchRequestBody userPatchRequestBody) {
     User user = getUserByUsername(username);
 
-    user.setUsername(userPatchRequestBody.getUsername());
     user.setRealname(userPatchRequestBody.getRealname());
-    user.setPassword(passwordEncoder.encode(user.getPassword()));
     user.setNickname(userPatchRequestBody.getNickname());
 
     userJpaRepository.save(user);

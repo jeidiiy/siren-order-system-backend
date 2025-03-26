@@ -238,9 +238,7 @@ class UserControllerTest {
     UserPatchRequestBody userPatchRequestBody =
         UserPatchRequestBody.builder()
             .nickname("테스트닉네임")
-            .password("password11!!")
             .realname("테스트찐이름")
-            .username(username)
             .build();
 
     // when & then
@@ -263,9 +261,7 @@ class UserControllerTest {
     UserPatchRequestBody userPatchRequestBody =
         UserPatchRequestBody.builder()
             .nickname("테스트닉네임")
-            .password("password11!!")
             .realname("테스트찐이름")
-            .username(anotherUsername)
             .build();
 
     // when & then
