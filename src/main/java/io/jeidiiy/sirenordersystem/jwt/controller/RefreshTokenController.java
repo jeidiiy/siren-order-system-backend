@@ -4,16 +4,20 @@ import static io.jeidiiy.sirenordersystem.jwt.filter.JwtAuthenticationFilter.BEA
 
 import io.jeidiiy.sirenordersystem.jwt.exception.RefreshTokenNotSetException;
 import io.jeidiiy.sirenordersystem.jwt.service.RefreshTokenService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "리프레시 토큰 API")
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
 @RestController
-public class RefreshTokenController implements RefreshTokenControllerDocs {
+public class RefreshTokenController {
 
   private final RefreshTokenService refreshTokenService;
 
@@ -21,6 +25,8 @@ public class RefreshTokenController implements RefreshTokenControllerDocs {
   // 로그인하지 않은 경우에도(앱 컴포넌트가 마운트될 때) 해당 API 에 요청하게 되는데
   // 이때 예외처리를 별도로 하기 위해서이다.
   // required = ture 인 경우에 오류가 발생하면 스프링에서 예외를 던진다.
+  @Operation(summary = "엑세스 토큰 재발급")
+  @Parameter(name = "refreshToken", description = "Set-Cookie 로 저장된 리프레시 토큰")
   @PostMapping("/refresh-token")
   public ResponseEntity<Void> refreshToken(
       @RequestHeader(value = HttpHeaders.AUTHORIZATION, required = false) String authorization,
