@@ -3,6 +3,7 @@ package io.jeidiiy.sirenordersystem.user.controller;
 import io.jeidiiy.sirenordersystem.jwt.model.JwtToken;
 import io.jeidiiy.sirenordersystem.user.domain.User;
 import io.jeidiiy.sirenordersystem.user.domain.dto.UserLoginRequestBody;
+import io.jeidiiy.sirenordersystem.user.domain.dto.UserPasswordPatchRequestBody;
 import io.jeidiiy.sirenordersystem.user.domain.dto.UserPatchRequestBody;
 import io.jeidiiy.sirenordersystem.user.domain.dto.UserPostRequestBody;
 import io.jeidiiy.sirenordersystem.user.service.UserService;
@@ -51,6 +52,16 @@ public class UserController {
       @PathVariable String username,
       @Valid @RequestBody UserPatchRequestBody userPatchRequestBody) {
     userService.updateUserByUsername(username, userPatchRequestBody);
+    return ResponseEntity.ok().build();
+  }
+
+  @Operation(summary = "비밀번호 수정")
+  @PreAuthorize("#username == authentication.name")
+  @PatchMapping("/{username}/password")
+  public ResponseEntity<Void> updatePasswordByUsername(
+      @PathVariable String username,
+      @Valid @RequestBody UserPasswordPatchRequestBody userPasswordPatchRequestBody) {
+    userService.updatePasswordByUsername(username, userPasswordPatchRequestBody);
     return ResponseEntity.ok().build();
   }
 

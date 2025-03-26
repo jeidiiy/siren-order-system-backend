@@ -5,10 +5,8 @@ import io.jeidiiy.sirenordersystem.jwt.model.RefreshToken;
 import io.jeidiiy.sirenordersystem.jwt.service.JwtService;
 import io.jeidiiy.sirenordersystem.jwt.service.RefreshTokenService;
 import io.jeidiiy.sirenordersystem.user.domain.User;
-import io.jeidiiy.sirenordersystem.user.domain.dto.AuthenticationUser;
-import io.jeidiiy.sirenordersystem.user.domain.dto.UserLoginRequestBody;
-import io.jeidiiy.sirenordersystem.user.domain.dto.UserPatchRequestBody;
-import io.jeidiiy.sirenordersystem.user.domain.dto.UserPostRequestBody;
+import io.jeidiiy.sirenordersystem.user.domain.dto.*;
+import io.jeidiiy.sirenordersystem.user.exception.PasswordNotMatchException;
 import io.jeidiiy.sirenordersystem.user.exception.UserAlreadyExistsException;
 import io.jeidiiy.sirenordersystem.user.repository.UserJpaRepository;
 import java.util.Date;
@@ -47,6 +45,16 @@ public class UserService implements UserDetailsService {
     user.setRealname(userPatchRequestBody.getRealname());
     user.setNickname(userPatchRequestBody.getNickname());
 
+    userJpaRepository.save(user);
+  }
+
+  public void updatePasswordByUsername(
+      String username, UserPasswordPatchRequestBody userPasswordPatchRequestBody) {
+    User user = getUserByUsername(username);
+    if (!passwordEncoder.matches(userPasswordPatchRequestBody.oldPassword(), user.getPassword())) {
+      throw new PasswordNotMatchException("비밀번호가 일치하지 않습니다");
+    }
+    user.setPassword(passwordEncoder.encode(userPasswordPatchRequestBody.newPassword()));
     userJpaRepository.save(user);
   }
 
