@@ -14,6 +14,7 @@ import io.jeidiiy.sirenordersystem.jwt.service.JwtAuthenticationEntryPoint;
 import io.jeidiiy.sirenordersystem.jwt.service.JwtLogoutSuccessHandler;
 import io.jeidiiy.sirenordersystem.jwt.service.JwtService;
 import io.jeidiiy.sirenordersystem.security.WithMockCustomUser;
+import io.jeidiiy.sirenordersystem.user.domain.dto.UserPasswordPatchRequestBody;
 import io.jeidiiy.sirenordersystem.user.domain.dto.UserPatchRequestBody;
 import io.jeidiiy.sirenordersystem.user.domain.dto.UserPostRequestBody;
 import io.jeidiiy.sirenordersystem.user.exception.UserAlreadyExistsException;
@@ -238,9 +239,7 @@ class UserControllerTest {
     UserPatchRequestBody userPatchRequestBody =
         UserPatchRequestBody.builder()
             .nickname("테스트닉네임")
-            .password("password11!!")
             .realname("테스트찐이름")
-            .username(username)
             .build();
 
     // when & then
@@ -263,9 +262,7 @@ class UserControllerTest {
     UserPatchRequestBody userPatchRequestBody =
         UserPatchRequestBody.builder()
             .nickname("테스트닉네임")
-            .password("password11!!")
             .realname("테스트찐이름")
-            .username(anotherUsername)
             .build();
 
     // when & then
@@ -276,6 +273,25 @@ class UserControllerTest {
                 .content(mapper.writeValueAsString(userPatchRequestBody)))
         .andExpect(status().isForbidden());
     then(userService).shouldHaveNoInteractions();
+  }
+
+  @DisplayName("[PATCH] 로그인한 유저가 자기 정보 수정 -> 200 OK (정상)")
+  @WithMockCustomUser
+  @Test
+  void givenAuthenticationUserAndPassword_whenUpdating_thenResponds200() throws Exception {
+    // given
+    String username = "loginUsername";
+    JwtToken jwtToken = jwtService.generateJwtToken(username);
+    UserPasswordPatchRequestBody requestBody = new UserPasswordPatchRequestBody("oldpassword11!!", "newpassword11!!");
+
+    // when & then
+    mvc.perform(
+                    patch("/api/v1/users/{username}/password", username)
+                            .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken.accessToken())
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(mapper.writeValueAsString(requestBody)))
+            .andExpect(status().isOk());
+    then(userService).should().updatePasswordByUsername(username, requestBody);
   }
 
   @DisplayName("[DELETE] 로그인한 유저가 회원 탈퇴 -> 200 OK (정상)")
