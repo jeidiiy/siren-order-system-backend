@@ -99,10 +99,6 @@ public class UserService implements UserDetailsService {
     }
   }
 
-  public UserGetResponseDto getUserResponseDtoByUsername(String username) {
-    return UserGetResponseDto.from(getUserByUsername(username));
-  }
-
   public User getUserByUsername(String username) {
     return userJpaRepository
         .findByUsername(username)

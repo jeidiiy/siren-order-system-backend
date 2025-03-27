@@ -2,7 +2,10 @@ package io.jeidiiy.sirenordersystem.user.controller;
 
 import io.jeidiiy.sirenordersystem.jwt.model.JwtToken;
 import io.jeidiiy.sirenordersystem.user.domain.User;
-import io.jeidiiy.sirenordersystem.user.domain.dto.*;
+import io.jeidiiy.sirenordersystem.user.domain.dto.UserLoginRequestBody;
+import io.jeidiiy.sirenordersystem.user.domain.dto.UserPasswordPatchRequestBody;
+import io.jeidiiy.sirenordersystem.user.domain.dto.UserPatchRequestBody;
+import io.jeidiiy.sirenordersystem.user.domain.dto.UserPostRequestBody;
 import io.jeidiiy.sirenordersystem.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -38,8 +41,8 @@ public class UserController {
   @Operation(summary = "본인 정보 조회")
   @PreAuthorize("#username == authentication.name")
   @GetMapping("/{username}")
-  public ResponseEntity<UserGetResponseDto> getUserByUsername(@PathVariable String username) {
-    return ResponseEntity.ok(userService.getUserResponseDtoByUsername(username));
+  public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
+    return ResponseEntity.ok(userService.getUserByUsername(username));
   }
 
   @Operation(summary = "본인 정보 수정")

@@ -58,7 +58,7 @@ class UserControllerTest {
             get("/api/v1/users/{username}", username)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken.accessToken()))
         .andExpect(status().isOk());
-    then(userService).should().getUserResponseDtoByUsername(username);
+    then(userService).should().getUserByUsername(username);
   }
 
   @DisplayName("[GET] 로그인한 유저가 다른 사람 정보 조회 -> 403 Forbidden (실패)")
