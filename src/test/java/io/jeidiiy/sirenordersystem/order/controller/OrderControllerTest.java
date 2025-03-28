@@ -41,8 +41,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-@DisplayName("[Controller] 사용자 컨트롤러 테스트")
-@Import({SecurityConfig.class, JwtAuthenticationFilter.class, JwtService.class})
+@DisplayName("[Controller] 주문 컨트롤러 테스트")
+@Import({SecurityConfig.class, JwtService.class})
 @WebMvcTest(OrderController.class)
 class OrderControllerTest {
   @Autowired MockMvc mvc;

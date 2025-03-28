@@ -35,7 +35,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 
 @DisplayName("[Controller] 매장 컨트롤러 테스트")
-@Import({SecurityConfig.class, JwtAuthenticationFilter.class, JwtService.class})
+@Import({SecurityConfig.class, JwtService.class})
 @WebMvcTest(StoreController.class)
 class StoreControllerTest {
   @Autowired MockMvc mvc;

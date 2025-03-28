@@ -26,7 +26,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 @DisplayName("[Controller] 종류 컨트롤러 테스트")
-@Import({SecurityConfig.class, JwtAuthenticationFilter.class, JwtService.class})
+@Import({SecurityConfig.class, JwtService.class})
 @WebMvcTest(TypeController.class)
 class TypeControllerTest {
   @Autowired MockMvc mvc;

@@ -3,6 +3,7 @@ package io.jeidiiy.sirenordersystem.config;
 import static org.springframework.http.HttpMethod.GET;
 import static org.springframework.http.HttpMethod.POST;
 
+import io.jeidiiy.sirenordersystem.jwt.filter.JwtAuthExceptionFilter;
 import io.jeidiiy.sirenordersystem.jwt.filter.JwtAuthenticationFilter;
 import io.jeidiiy.sirenordersystem.jwt.service.JwtAuthenticationEntryPoint;
 import io.jeidiiy.sirenordersystem.jwt.service.JwtLogoutSuccessHandler;
@@ -16,6 +17,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.intercept.AuthorizationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -30,6 +32,7 @@ import java.util.List;
 public class SecurityConfig {
 
   private final JwtAuthenticationFilter jwtAuthenticationFilter;
+  private final JwtAuthExceptionFilter jwtAuthExceptionFilter;
   private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
   private final JwtLogoutSuccessHandler jwtLogoutSuccessHandler;
 
@@ -61,6 +64,7 @@ public class SecurityConfig {
         .csrf(CsrfConfigurer::disable)
         .cors(Customizer.withDefaults())
         .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+        .addFilterBefore(jwtAuthExceptionFilter, AuthorizationFilter.class)
         .exceptionHandling(
             exceptionHandler ->
                 exceptionHandler.authenticationEntryPoint(jwtAuthenticationEntryPoint))
