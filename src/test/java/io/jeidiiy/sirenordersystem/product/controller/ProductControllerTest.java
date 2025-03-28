@@ -29,7 +29,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.MockMvc;
 
 @DisplayName("[Controller] 상품 컨트롤러 테스트")
-@Import({SecurityConfig.class, JwtAuthenticationFilter.class, JwtService.class})
+@Import({SecurityConfig.class, JwtService.class})
 @WebMvcTest(ProductController.class)
 class ProductControllerTest {
   @Autowired MockMvc mvc;
