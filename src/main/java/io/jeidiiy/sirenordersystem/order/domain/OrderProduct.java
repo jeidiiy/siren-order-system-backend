@@ -1,11 +1,7 @@
 package io.jeidiiy.sirenordersystem.order.domain;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jeidiiy.sirenordersystem.product.domain.Product;
 import jakarta.persistence.*;
-import java.io.IOException;
-import java.util.Map;
 import java.util.Objects;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
