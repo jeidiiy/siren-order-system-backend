@@ -4,6 +4,7 @@ import io.jeidiiy.sirenordersystem.order.domain.Order;
 import io.jeidiiy.sirenordersystem.order.domain.OrderProduct;
 import io.jeidiiy.sirenordersystem.order.domain.OrderStatus;
 import io.jeidiiy.sirenordersystem.order.domain.dto.*;
+import io.jeidiiy.sirenordersystem.order.exception.NonExistOrderProductException;
 import io.jeidiiy.sirenordersystem.order.repository.OrderJpaRepository;
 import io.jeidiiy.sirenordersystem.product.domain.Product;
 import io.jeidiiy.sirenordersystem.product.service.ProductService;
@@ -27,13 +28,17 @@ public class OrderService {
   private final ProductService productService;
 
   public void createOrder(OrderPostRequestBody requestBody, String currentUsername) {
+    if (requestBody.orderProductDtos().isEmpty()) {
+      throw new NonExistOrderProductException("주문된 상품이 없습니다");
+    }
+
     User user = userService.getUserByUsername(currentUsername);
     Store store = storeService.findById(requestBody.storeId());
     Order order = Order.of(user, store, OrderStatus.PENDING);
     int totalPrice = 0;
 
     for (OrderProductDto orderProductDto : requestBody.orderProductDtos()) {
-      Product product = productService.findById(orderProductDto.productId());
+      Product product = productService.findById(orderProductDto.id());
       OrderProduct orderProduct = OrderProduct.of(order, product, orderProductDto.quantity());
       totalPrice += product.getBasePrice() * orderProductDto.quantity();
       orderProductService.save(orderProduct);
