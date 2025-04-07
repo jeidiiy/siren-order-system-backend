@@ -33,7 +33,7 @@ public class OrderService {
     int totalPrice = 0;
 
     for (OrderProductDto orderProductDto : requestBody.orderProductDtos()) {
-      Product product = productService.findById(orderProductDto.productId());
+      Product product = productService.findById(orderProductDto.id());
       OrderProduct orderProduct = OrderProduct.of(order, product, orderProductDto.quantity());
       totalPrice += product.getBasePrice() * orderProductDto.quantity();
       orderProductService.save(orderProduct);
