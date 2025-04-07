@@ -1,11 +1,7 @@
 package io.jeidiiy.sirenordersystem.order.domain;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jeidiiy.sirenordersystem.product.domain.Product;
 import jakarta.persistence.*;
-import java.io.IOException;
-import java.util.Map;
 import java.util.Objects;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,29 +28,6 @@ public class OrderProduct {
   @Column(nullable = false)
   private Integer quantity;
 
-  @Column(columnDefinition = "TEXT")
-  private String options;
-
-  // JSON을 Map으로 변환 (getter)
-  public Map<String, Object> getOptionsAsMap() {
-    ObjectMapper objectMapper = new ObjectMapper();
-    try {
-      return objectMapper.readValue(this.options, new TypeReference<>() {});
-    } catch (IOException e) {
-      throw new RuntimeException("Failed to parse JSON", e);
-    }
-  }
-
-  // Map을 JSON 문자열로 변환 (setter)
-  public void setOptionsFromMap(Map<String, Object> optionsMap) {
-    ObjectMapper objectMapper = new ObjectMapper();
-    try {
-      this.options = objectMapper.writeValueAsString(optionsMap);
-    } catch (IOException e) {
-      throw new RuntimeException("Failed to convert to JSON", e);
-    }
-  }
-
   private OrderProduct(Order order, Product product, Integer quantity) {
     this.order = order;
     this.product = product;
@@ -76,8 +49,7 @@ public class OrderProduct {
 
     return Objects.equals(getOrder(), orderProduct.getOrder())
         && Objects.equals(getProduct(), orderProduct.getProduct())
-        && Objects.equals(getQuantity(), orderProduct.getQuantity())
-        && Objects.equals(getOptions(), orderProduct.getOptions());
+        && Objects.equals(getQuantity(), orderProduct.getQuantity());
   }
 
   @Override
@@ -86,6 +58,6 @@ public class OrderProduct {
       return Objects.hash(getId());
     }
 
-    return Objects.hash(getOrder(), getProduct(), getQuantity(), getOptions());
+    return Objects.hash(getOrder(), getProduct(), getQuantity());
   }
 }

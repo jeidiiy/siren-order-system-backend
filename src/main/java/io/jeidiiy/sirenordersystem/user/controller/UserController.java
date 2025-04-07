@@ -1,7 +1,6 @@
 package io.jeidiiy.sirenordersystem.user.controller;
 
 import io.jeidiiy.sirenordersystem.jwt.model.JwtToken;
-import io.jeidiiy.sirenordersystem.user.domain.User;
 import io.jeidiiy.sirenordersystem.user.domain.dto.*;
 import io.jeidiiy.sirenordersystem.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;

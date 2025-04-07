@@ -1,7 +1,6 @@
 package io.jeidiiy.sirenordersystem.exception;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
