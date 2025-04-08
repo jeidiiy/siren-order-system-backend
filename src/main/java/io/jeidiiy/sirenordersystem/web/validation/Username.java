@@ -8,9 +8,9 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Username {
-    String message() default "아이디는 영문만 가능합니다.";
+  String message() default "아이디는 영문만 가능합니다.";
 
-    Class<?>[] groups() default {};
+  Class<?>[] groups() default {};
 
-    Class<? extends jakarta.validation.Payload>[] payload() default {};
+  Class<? extends jakarta.validation.Payload>[] payload() default {};
 }

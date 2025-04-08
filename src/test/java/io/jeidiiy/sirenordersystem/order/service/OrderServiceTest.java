@@ -19,11 +19,9 @@ import io.jeidiiy.sirenordersystem.store.domain.Store;
 import io.jeidiiy.sirenordersystem.store.service.StoreService;
 import io.jeidiiy.sirenordersystem.user.domain.User;
 import io.jeidiiy.sirenordersystem.user.service.UserService;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -129,12 +127,13 @@ class OrderServiceTest {
     ReflectionTestUtils.setField(order2, "id", order2Id);
     ReflectionTestUtils.setField(order2, "createdAt", LocalDateTime.now().plusHours(4));
     OrderProduct orderProduct3 =
-            OrderProduct.of(
-                    order1, Product.of(1, "아메리카노", null, null, null, null, Category.BEVERAGE), 1);
+        OrderProduct.of(
+            order1, Product.of(1, "아메리카노", null, null, null, null, Category.BEVERAGE), 1);
     OrderProduct orderProduct4 =
-            OrderProduct.of(order1, Product.of(2, "샌드위치", null, null, null, null, Category.FOOD), 1);
+        OrderProduct.of(order1, Product.of(2, "샌드위치", null, null, null, null, Category.FOOD), 1);
     OrderProduct orderProduct5 =
-            OrderProduct.of(order1, Product.of(3, "머그컵", null, null, null, null, Category.MERCHANDISE), 1);
+        OrderProduct.of(
+            order1, Product.of(3, "머그컵", null, null, null, null, Category.MERCHANDISE), 1);
     List<OrderProduct> orderProducts2 = List.of(orderProduct3, orderProduct4, orderProduct5);
 
     List<Order> orders = List.of(order1, order2);
@@ -170,10 +169,10 @@ class OrderServiceTest {
     ReflectionTestUtils.setField(order, "id", orderId);
     ReflectionTestUtils.setField(order, "createdAt", LocalDateTime.now());
     OrderProduct orderProduct1 =
-            OrderProduct.of(
-                    order, Product.of(1, "아메리카노", null, null, null, null, Category.BEVERAGE), 1);
+        OrderProduct.of(
+            order, Product.of(1, "아메리카노", null, null, null, null, Category.BEVERAGE), 1);
     OrderProduct orderProduct2 =
-            OrderProduct.of(order, Product.of(2, "샌드위치", null, null, null, null, Category.FOOD), 1);
+        OrderProduct.of(order, Product.of(2, "샌드위치", null, null, null, null, Category.FOOD), 1);
     List<OrderProduct> orderProducts = List.of(orderProduct1, orderProduct2);
 
     given(userService.getUserByUsername(currentUsername)).willReturn(user);
@@ -181,7 +180,8 @@ class OrderServiceTest {
     given(orderProductService.findAllByOrderId(order.getId())).willReturn(orderProducts);
 
     // when
-    OrderResponseDto result = sut.getOrderResponseDtoByCurrentUserAndOrderId(currentUsername, orderId);
+    OrderResponseDto result =
+        sut.getOrderResponseDtoByCurrentUserAndOrderId(currentUsername, orderId);
 
     // then
     assertThat(result.orderId()).isEqualTo(orderId);

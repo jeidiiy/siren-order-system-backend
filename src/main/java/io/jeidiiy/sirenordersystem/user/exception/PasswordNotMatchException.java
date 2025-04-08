@@ -4,7 +4,7 @@ import io.jeidiiy.sirenordersystem.exception.ClientErrorException;
 import org.springframework.http.HttpStatus;
 
 public class PasswordNotMatchException extends ClientErrorException {
-    public PasswordNotMatchException(String message) {
-        super(HttpStatus.CONFLICT, message);
-    }
+  public PasswordNotMatchException(String message) {
+    super(HttpStatus.CONFLICT, message);
+  }
 }

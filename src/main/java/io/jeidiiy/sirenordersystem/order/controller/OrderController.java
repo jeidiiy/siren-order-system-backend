@@ -44,7 +44,9 @@ public class OrderController {
   @Operation(summary = "사용자 본인이 주문한 특정 내역 조회하기")
   @PreAuthorize("#username == authentication.name")
   @GetMapping("/{username}/{orderId}")
-  public ResponseEntity<OrderResponseDto> getOrder(@PathVariable String username, @PathVariable Integer orderId) {
-    return ResponseEntity.ok(orderService.getOrderResponseDtoByCurrentUserAndOrderId(username, orderId));
+  public ResponseEntity<OrderResponseDto> getOrder(
+      @PathVariable String username, @PathVariable Integer orderId) {
+    return ResponseEntity.ok(
+        orderService.getOrderResponseDtoByCurrentUserAndOrderId(username, orderId));
   }
 }

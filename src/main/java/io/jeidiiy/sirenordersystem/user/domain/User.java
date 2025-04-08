@@ -42,7 +42,7 @@ public class User {
   private Role role;
 
   @Column private LocalDateTime createdAt;
-  
+
   @Column private LocalDateTime updatedAt;
 
   @Column private LocalDateTime deletedAt;

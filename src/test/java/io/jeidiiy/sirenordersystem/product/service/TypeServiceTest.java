@@ -20,8 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @DisplayName("[Service] 종류 서비스 테스트")
 @ExtendWith(MockitoExtension.class)
 class TypeServiceTest {
-  @InjectMocks
-  TypeService sut;
+  @InjectMocks TypeService sut;
 
   @Mock TypeJpaRepository typeJpaRepository;
 

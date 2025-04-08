@@ -2,7 +2,6 @@ package io.jeidiiy.sirenordersystem.order.domain.dto;
 
 import io.jeidiiy.sirenordersystem.order.domain.Order;
 import io.jeidiiy.sirenordersystem.order.domain.OrderStatus;
-
 import java.time.LocalDateTime;
 import java.util.List;
 

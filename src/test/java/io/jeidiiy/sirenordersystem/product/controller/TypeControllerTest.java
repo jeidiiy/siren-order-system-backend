@@ -68,7 +68,8 @@ class TypeControllerTest {
                 TypeResponseDto.from(types.get(2))));
 
     // when & then
-    mvc.perform(get("/api/v1/types/{category}", category.name().toLowerCase())).andExpect(status().isOk());
+    mvc.perform(get("/api/v1/types/{category}", category.name().toLowerCase()))
+        .andExpect(status().isOk());
     then(typeService).should().findTypeByCategory(category);
   }
 
@@ -78,7 +79,8 @@ class TypeControllerTest {
     // given
 
     // when & then
-    mvc.perform(get("/api/v1/types/{category}", "NonExistsCategory")).andExpect(status().isBadRequest());
+    mvc.perform(get("/api/v1/types/{category}", "NonExistsCategory"))
+        .andExpect(status().isBadRequest());
     then(typeService).shouldHaveNoInteractions();
   }
 }

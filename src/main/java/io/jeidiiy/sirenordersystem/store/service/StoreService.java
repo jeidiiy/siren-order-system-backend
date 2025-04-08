@@ -33,8 +33,8 @@ public class StoreService {
   @Transactional(readOnly = true)
   public Store findById(Integer storeId) {
     return storeJpaRepository
-            .findById(storeId)
-            .orElseThrow(() -> new StoreNotFoundException(storeId));
+        .findById(storeId)
+        .orElseThrow(() -> new StoreNotFoundException(storeId));
   }
 
   public void toggleStoreIsOpenByStoreIdAndLoginUserUsername(

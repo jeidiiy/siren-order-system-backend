@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * 같은 카테고리에 같은 제목이 여러 개 들어가지 않도록 제목과 카테고리를 묶어서 유니크 키 제약을 둠
- * 이에 따라 인덱스도 만들어 줌
+ * 같은 카테고리에 같은 제목이 여러 개 들어가지 않도록 제목과 카테고리를 묶어서 유니크 키 제약을 둠 이에 따라 인덱스도 만들어 줌
  *
  * @author jeidiiy
  */
