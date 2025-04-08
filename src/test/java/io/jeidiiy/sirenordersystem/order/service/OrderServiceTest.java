@@ -5,10 +5,12 @@ import static org.mockito.BDDMockito.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jeidiiy.sirenordersystem.order.domain.Order;
+import io.jeidiiy.sirenordersystem.order.domain.OrderProduct;
 import io.jeidiiy.sirenordersystem.order.domain.OrderStatus;
 import io.jeidiiy.sirenordersystem.order.domain.dto.*;
 import io.jeidiiy.sirenordersystem.order.repository.OrderJpaRepository;
 import io.jeidiiy.sirenordersystem.product.domain.Category;
+import io.jeidiiy.sirenordersystem.product.domain.Product;
 import io.jeidiiy.sirenordersystem.product.domain.beverage.dto.BeverageDto;
 import io.jeidiiy.sirenordersystem.product.domain.dto.ProductDto;
 import io.jeidiiy.sirenordersystem.product.domain.food.dto.FoodDto;
@@ -17,7 +19,9 @@ import io.jeidiiy.sirenordersystem.store.domain.Store;
 import io.jeidiiy.sirenordersystem.store.service.StoreService;
 import io.jeidiiy.sirenordersystem.user.domain.User;
 import io.jeidiiy.sirenordersystem.user.service.UserService;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -70,9 +74,8 @@ class OrderServiceTest {
             storeId,
             pickupOption,
             List.of(
-                new OrderProductDto(
-                    americanoId, americanoQuantity, Category.BEVERAGE),
-                new OrderProductDto(sandwichId, sandwichQuantity, Category.FOOD)));
+                new OrderProductDto(americanoId, americanoQuantity),
+                new OrderProductDto(sandwichId, sandwichQuantity)));
 
     int americanoOrderTotalPrice = 4500 * 2;
     int sandwichOrderTotalPrice = 6700 * 2;
@@ -96,5 +99,93 @@ class OrderServiceTest {
     Order savedOrder = orderCaptor.getValue();
 
     assertThat(expectedTotalPrice).isEqualTo(savedOrder.getTotalPrice());
+  }
+
+  @DisplayName("로그인한 사용자가 본인의 주문 내역을 확인한다.")
+  @Test
+  void givenUsername_whenRequesting_thenResponse() {
+    // given
+    var currentUsername = "loginUsername";
+    var userId = 1;
+    User user = User.builder().username(currentUsername).build();
+    ReflectionTestUtils.setField(user, "id", userId);
+    Store store = Store.of("storeName", null, "imageUrl", null, null, null, false);
+
+    var order1Id = 1;
+    Order order1 = Order.of(user, store, OrderStatus.COMPLETE);
+    ReflectionTestUtils.setField(order1, "id", order1Id);
+    ReflectionTestUtils.setField(order1, "createdAt", LocalDateTime.now());
+    OrderProduct orderProduct1 =
+        OrderProduct.of(
+            order1, Product.of(1, "아메리카노", null, null, null, null, Category.BEVERAGE), 1);
+    OrderProduct orderProduct2 =
+        OrderProduct.of(order1, Product.of(2, "샌드위치", null, null, null, null, Category.FOOD), 1);
+    List<OrderProduct> orderProducts1 = List.of(orderProduct1, orderProduct2);
+
+    var order2Id = 2;
+    Order order2 = Order.of(user, store, OrderStatus.COMPLETE);
+    ReflectionTestUtils.setField(order2, "id", order2Id);
+    ReflectionTestUtils.setField(order2, "createdAt", LocalDateTime.now().plusHours(4));
+    OrderProduct orderProduct3 =
+        OrderProduct.of(
+            order1, Product.of(1, "아메리카노", null, null, null, null, Category.BEVERAGE), 1);
+    OrderProduct orderProduct4 =
+        OrderProduct.of(order1, Product.of(2, "샌드위치", null, null, null, null, Category.FOOD), 1);
+    OrderProduct orderProduct5 =
+        OrderProduct.of(
+            order1, Product.of(3, "머그컵", null, null, null, null, Category.MERCHANDISE), 1);
+    List<OrderProduct> orderProducts2 = List.of(orderProduct3, orderProduct4, orderProduct5);
+
+    List<Order> orders = List.of(order1, order2);
+
+    given(userService.getUserByUsername(currentUsername)).willReturn(user);
+    given(orderJpaRepository.findAllByUserId(userId)).willReturn(orders);
+    given(orderProductService.findAllByOrderId(order1.getId())).willReturn(orderProducts1);
+    given(orderProductService.findAllByOrderId(order2.getId())).willReturn(orderProducts2);
+
+    // when
+    List<OrderResponseDto> result = sut.getOrderResponseDtosByCurrentUser(currentUsername);
+
+    // then
+    assertThat(result.size()).isEqualTo(2);
+    assertThat(result.get(0).orderedDateTime()).isAfter(result.get(1).orderedDateTime());
+    assertThat(result.get(0).orderProductResponseDtos().size()).isEqualTo(3);
+    assertThat(result.get(1).orderProductResponseDtos().size()).isEqualTo(2);
+    then(orderJpaRepository).should().findAllByUserId(userId);
+  }
+
+  @DisplayName("로그인한 사용자가 본인의 특정 주문 내역을 확인한다.")
+  @Test
+  void givenUsernameAndOrderId_whenRequesting_thenResponse() {
+    // given
+    var currentUsername = "loginUsername";
+    var userId = 1;
+    User user = User.builder().username(currentUsername).build();
+    ReflectionTestUtils.setField(user, "id", userId);
+    Store store = Store.of("storeName", null, "imageUrl", null, null, null, false);
+
+    var orderId = 1;
+    Order order = Order.of(user, store, OrderStatus.COMPLETE);
+    ReflectionTestUtils.setField(order, "id", orderId);
+    ReflectionTestUtils.setField(order, "createdAt", LocalDateTime.now());
+    OrderProduct orderProduct1 =
+        OrderProduct.of(
+            order, Product.of(1, "아메리카노", null, null, null, null, Category.BEVERAGE), 1);
+    OrderProduct orderProduct2 =
+        OrderProduct.of(order, Product.of(2, "샌드위치", null, null, null, null, Category.FOOD), 1);
+    List<OrderProduct> orderProducts = List.of(orderProduct1, orderProduct2);
+
+    given(userService.getUserByUsername(currentUsername)).willReturn(user);
+    given(orderJpaRepository.findByIdAndUserId(orderId, userId)).willReturn(Optional.of(order));
+    given(orderProductService.findAllByOrderId(order.getId())).willReturn(orderProducts);
+
+    // when
+    OrderResponseDto result =
+        sut.getOrderResponseDtoByCurrentUserAndOrderId(currentUsername, orderId);
+
+    // then
+    assertThat(result.orderId()).isEqualTo(orderId);
+    assertThat(result.orderProductResponseDtos().size()).isEqualTo(2);
+    then(orderJpaRepository).should().findByIdAndUserId(orderId, userId);
   }
 }

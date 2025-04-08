@@ -9,9 +9,9 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Nickname {
-    String message() default "닉네임은 1~6자의 한글만 가능합니다.";
+  String message() default "닉네임은 1~6자의 한글만 가능합니다.";
 
-    Class<?>[] groups() default {};
+  Class<?>[] groups() default {};
 
-    Class<? extends Payload>[] payload() default {};
+  Class<? extends Payload>[] payload() default {};
 }

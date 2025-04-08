@@ -1,5 +1,7 @@
 package io.jeidiiy.sirenordersystem.order.controller;
 
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -10,6 +12,7 @@ import io.jeidiiy.sirenordersystem.jwt.service.JwtLogoutSuccessHandler;
 import io.jeidiiy.sirenordersystem.jwt.service.JwtService;
 import io.jeidiiy.sirenordersystem.order.domain.dto.OrderPostRequestBody;
 import io.jeidiiy.sirenordersystem.order.domain.dto.OrderProductDto;
+import io.jeidiiy.sirenordersystem.order.domain.dto.OrderResponseDto;
 import io.jeidiiy.sirenordersystem.order.service.OrderService;
 import io.jeidiiy.sirenordersystem.product.domain.Category;
 import io.jeidiiy.sirenordersystem.product.domain.beverage.dto.BeverageDto;
@@ -43,29 +46,31 @@ class OrderControllerTest {
   @DisplayName("[POST] 사용자가 매장 및 수령 방법, 주문 상품 및 개수를 요청 -> 200 OK [성공]")
   @WithMockCustomUser
   @Test
-  void givenStoreAndPickupOptionAndProducts_whenRequesting_thenResponds200()
-      throws Exception {
+  void givenStoreAndPickupOptionAndProducts_whenRequesting_thenResponds200() throws Exception {
     // given
     int storeId = 1;
     String pickupOption = "to-go";
     int americanoId = 1;
     int americanoQuantity = 2;
     BeverageDto americano =
-        (BeverageDto) ProductDto.of(americanoId, "아메리카노", "Americano", "아메리카노", 4500, "아메리카노 이미지", Category.BEVERAGE);
+        (BeverageDto)
+            ProductDto.of(
+                americanoId, "아메리카노", "Americano", "아메리카노", 4500, "아메리카노 이미지", Category.BEVERAGE);
 
     int sandwichId = 2;
     int sandwichQuantity = 2;
     FoodDto sandwich =
-        (FoodDto) ProductDto.of(sandwichId, "샌드위치", "sandwich", "샌드위치 설명", 6700, "샌드위치 이미지", Category.FOOD);
+        (FoodDto)
+            ProductDto.of(
+                sandwichId, "샌드위치", "sandwich", "샌드위치 설명", 6700, "샌드위치 이미지", Category.FOOD);
 
     OrderPostRequestBody orderPostRequestBody =
         new OrderPostRequestBody(
             storeId,
             pickupOption,
             List.of(
-                new OrderProductDto(
-                    americanoId, americanoQuantity, Category.BEVERAGE),
-                new OrderProductDto(sandwichId, sandwichQuantity, Category.FOOD)));
+                new OrderProductDto(americanoId, americanoQuantity),
+                new OrderProductDto(sandwichId, sandwichQuantity)));
 
     // when & then
     mvc.perform(
@@ -73,5 +78,31 @@ class OrderControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(orderPostRequestBody)))
         .andExpect(status().isOk());
+  }
+
+  @DisplayName("[GET] 사용자가 본인이 주문한 내역을 요청 -> 200 OK [성공]")
+  @WithMockCustomUser
+  @Test
+  void givenUsername_whenRequesting_thenResponds200() throws Exception {
+    String username = "loginUsername";
+
+    given(orderService.getOrderResponseDtosByCurrentUser(username)).willReturn(List.of());
+
+    mvc.perform(get("/api/v1/orders/" + username)).andExpect(status().isOk());
+  }
+
+  @DisplayName("[GET] 사용자가 본인이 주문한 특정 내역을 요청 -> 200 OK [성공]")
+  @WithMockCustomUser
+  @Test
+  void givenUsernameAndOrderId_whenRequesting_thenResponds200() throws Exception {
+    // given
+    String username = "loginUsername";
+    Integer orderId = 1;
+
+    given(orderService.getOrderResponseDtoByCurrentUserAndOrderId(username, orderId))
+        .willReturn(new OrderResponseDto(orderId, null, null, null, null, null, null));
+
+    // when & then
+    mvc.perform(get("/api/v1/orders/" + username + "/" + orderId)).andExpect(status().isOk());
   }
 }

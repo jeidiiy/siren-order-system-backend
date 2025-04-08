@@ -236,10 +236,7 @@ class UserControllerTest {
     String username = "loginUsername";
     JwtToken jwtToken = jwtService.generateJwtToken(username);
     UserPatchRequestBody userPatchRequestBody =
-        UserPatchRequestBody.builder()
-            .nickname("테스트닉네임")
-            .realname("테스트찐이름")
-            .build();
+        UserPatchRequestBody.builder().nickname("테스트닉네임").realname("테스트찐이름").build();
 
     // when & then
     mvc.perform(
@@ -259,10 +256,7 @@ class UserControllerTest {
     String anotherUsername = "anotherUsername";
     JwtToken jwtToken = jwtService.generateJwtToken(anotherUsername);
     UserPatchRequestBody userPatchRequestBody =
-        UserPatchRequestBody.builder()
-            .nickname("테스트닉네임")
-            .realname("테스트찐이름")
-            .build();
+        UserPatchRequestBody.builder().nickname("테스트닉네임").realname("테스트찐이름").build();
 
     // when & then
     mvc.perform(
@@ -281,15 +275,16 @@ class UserControllerTest {
     // given
     String username = "loginUsername";
     JwtToken jwtToken = jwtService.generateJwtToken(username);
-    UserPasswordPatchRequestBody requestBody = new UserPasswordPatchRequestBody("oldpassword11!!", "newpassword11!!");
+    UserPasswordPatchRequestBody requestBody =
+        new UserPasswordPatchRequestBody("oldpassword11!!", "newpassword11!!");
 
     // when & then
     mvc.perform(
-                    patch("/api/v1/users/{username}/password", username)
-                            .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken.accessToken())
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(mapper.writeValueAsString(requestBody)))
-            .andExpect(status().isOk());
+            patch("/api/v1/users/{username}/password", username)
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + jwtToken.accessToken())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(mapper.writeValueAsString(requestBody)))
+        .andExpect(status().isOk());
     then(userService).should().updatePasswordByUsername(username, requestBody);
   }
 
