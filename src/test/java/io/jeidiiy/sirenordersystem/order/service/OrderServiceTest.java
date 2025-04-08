@@ -144,7 +144,7 @@ class OrderServiceTest {
     given(orderProductService.findAllByOrderId(order2.getId())).willReturn(orderProducts2);
 
     // when
-    List<OrderResponseDto> result = sut.getOrderResponseDtoByCurrentUser(currentUsername);
+    List<OrderResponseDto> result = sut.getOrderResponseDtosByCurrentUser(currentUsername);
 
     // then
     assertThat(result.size()).isEqualTo(2);

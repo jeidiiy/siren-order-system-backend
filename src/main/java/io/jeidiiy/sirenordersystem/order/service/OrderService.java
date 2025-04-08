@@ -31,6 +31,8 @@ public class OrderService {
   private final ProductService productService;
 
   public List<OrderResponseDto> getOrderResponseDtoByCurrentUser(String currentUsername) {
+
+  public List<OrderResponseDto> getOrderResponseDtosByCurrentUser(String currentUsername) {
     User user = userService.getUserByUsername(currentUsername);
     List<Order> orders = orderJpaRepository.findAllByUserId(user.getId());
     List<OrderResponseDto> result = new ArrayList<>();

@@ -83,7 +83,7 @@ class OrderControllerTest {
   void givenUsername_whenRequesting_thenResponds200() throws Exception {
     String username = "loginUsername";
 
-    given(orderService.getOrderResponseDtoByCurrentUser(username)).willReturn(List.of());
+    given(orderService.getOrderResponseDtosByCurrentUser(username)).willReturn(List.of());
 
     mvc.perform(get("/api/v1/orders/" + username)).andExpect(status().isOk());
   }

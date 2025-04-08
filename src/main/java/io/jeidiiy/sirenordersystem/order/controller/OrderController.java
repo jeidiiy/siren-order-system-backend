@@ -36,6 +36,7 @@ public class OrderController {
   @PreAuthorize("#username == authentication.name")
   @GetMapping("/{username}")
   public ResponseEntity<List<OrderResponseDto>> getOrders(@PathVariable String username) {
-    return ResponseEntity.ok(orderService.getOrderResponseDtoByCurrentUser(username));
+    return ResponseEntity.ok(orderService.getOrderResponseDtosByCurrentUser(username));
+  }
   }
 }
