@@ -12,6 +12,9 @@ import io.jeidiiy.sirenordersystem.store.domain.Store;
 import io.jeidiiy.sirenordersystem.store.service.StoreService;
 import io.jeidiiy.sirenordersystem.user.domain.User;
 import io.jeidiiy.sirenordersystem.user.service.UserService;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +29,25 @@ public class OrderService {
   private final UserService userService;
   private final StoreService storeService;
   private final ProductService productService;
+
+  public List<OrderResponseDto> getOrderResponseDtoByCurrentUser(String currentUsername) {
+    User user = userService.getUserByUsername(currentUsername);
+    List<Order> orders = orderJpaRepository.findAllByUserId(user.getId());
+    List<OrderResponseDto> result = new ArrayList<>();
+    for (Order order : orders) {
+      List<String> orderProductNames = new ArrayList<>();
+      List<OrderProduct> orderProducts = orderProductService.findAllByOrderId(order.getId());
+      for (OrderProduct orderProduct : orderProducts) {
+        orderProductNames.add(orderProduct.getProduct().getKrName());
+      }
+      result.add(OrderResponseDto.from(order, orderProductNames));
+    }
+
+    // 주문일 기준 최신순
+    result.sort(Comparator.comparing(OrderResponseDto::orderedDateTime).reversed());
+
+    return result;
+  }
 
   public void createOrder(OrderPostRequestBody requestBody, String currentUsername) {
     if (requestBody.orderProductDtos().isEmpty()) {
