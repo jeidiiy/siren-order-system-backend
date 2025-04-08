@@ -41,6 +41,10 @@ public class User {
   @Column
   private Role role;
 
+  @Column private LocalDateTime createdAt;
+  
+  @Column private LocalDateTime updatedAt;
+
   @Column private LocalDateTime deletedAt;
 
   @Builder
@@ -50,6 +54,17 @@ public class User {
     this.password = password;
     this.nickname = nickname;
     this.role = Role.CUSTOMER; // 기본값으로 고객으로 저장. 관리자는 별도로 관리
+  }
+
+  @PrePersist
+  private void prePersist() {
+    this.createdAt = LocalDateTime.now();
+    this.updatedAt = LocalDateTime.now();
+  }
+
+  @PreUpdate
+  private void preUpdate() {
+    this.updatedAt = LocalDateTime.now();
   }
 
   @Override
