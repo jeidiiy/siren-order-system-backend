@@ -3,6 +3,7 @@ package io.jeidiiy.sirenordersystem.order.domain;
 import io.jeidiiy.sirenordersystem.store.domain.Store;
 import io.jeidiiy.sirenordersystem.user.domain.User;
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +34,10 @@ public class Order {
   @Column
   private OrderStatus orderStatus;
 
+  @Column private LocalDateTime createdAt;
+
+  @Column private LocalDateTime updatedAt;
+
   private Order(User user, Store store, OrderStatus orderStatus) {
     this.user = user;
     this.store = store;
@@ -41,6 +46,17 @@ public class Order {
 
   public static Order of(User user, Store store, OrderStatus orderStatus) {
     return new Order(user, store, orderStatus);
+  }
+
+  @PrePersist
+  private void prePersist() {
+    this.createdAt = LocalDateTime.now();
+    this.updatedAt = LocalDateTime.now();
+  }
+
+  @PreUpdate
+  private void preUpdate() {
+    this.updatedAt = LocalDateTime.now();
   }
 
   @Override
