@@ -4,6 +4,7 @@ import io.jeidiiy.sirenordersystem.order.domain.Order;
 import io.jeidiiy.sirenordersystem.order.domain.OrderProduct;
 import io.jeidiiy.sirenordersystem.order.domain.OrderStatus;
 import io.jeidiiy.sirenordersystem.order.domain.dto.*;
+import io.jeidiiy.sirenordersystem.order.exception.NonExistOrderException;
 import io.jeidiiy.sirenordersystem.order.exception.NonExistOrderProductException;
 import io.jeidiiy.sirenordersystem.order.repository.OrderJpaRepository;
 import io.jeidiiy.sirenordersystem.product.domain.Product;
@@ -30,7 +31,20 @@ public class OrderService {
   private final StoreService storeService;
   private final ProductService productService;
 
-  public List<OrderResponseDto> getOrderResponseDtoByCurrentUser(String currentUsername) {
+  public OrderResponseDto getOrderResponseDtoByCurrentUserAndOrderId(
+      String username, Integer orderId) {
+    User user = userService.getUserByUsername(username);
+    Order order =
+        orderJpaRepository
+            .findByIdAndUserId(orderId, user.getId())
+            .orElseThrow(() -> new NonExistOrderException("ID에 해당하는 주문이 없습니다: " + orderId));
+
+    List<OrderProduct> orderProducts = orderProductService.findAllByOrderId(order.getId());
+    List<OrderProductResponseDto> orderProductResponseDtos =
+        orderProducts.stream().map(OrderProductResponseDto::from).toList();
+
+    return OrderResponseDto.from(order, orderProductResponseDtos);
+  }
 
   public List<OrderResponseDto> getOrderResponseDtosByCurrentUser(String currentUsername) {
     User user = userService.getUserByUsername(currentUsername);
