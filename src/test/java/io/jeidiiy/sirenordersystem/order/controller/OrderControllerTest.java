@@ -1,5 +1,7 @@
 package io.jeidiiy.sirenordersystem.order.controller;
 
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -73,5 +75,16 @@ class OrderControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(orderPostRequestBody)))
         .andExpect(status().isOk());
+  }
+
+  @DisplayName("[GET] 사용자가 본인이 주문한 내역을 요청 -> 200 OK [성공]")
+  @WithMockCustomUser
+  @Test
+  void givenUsername_whenRequesting_thenResponds200() throws Exception {
+    String username = "loginUsername";
+
+    given(orderService.getOrderResponseDtoByCurrentUser(username)).willReturn(List.of());
+
+    mvc.perform(get("/api/v1/orders/" + username)).andExpect(status().isOk());
   }
 }
