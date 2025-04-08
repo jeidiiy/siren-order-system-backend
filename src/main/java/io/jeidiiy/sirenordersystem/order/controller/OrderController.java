@@ -22,7 +22,9 @@ public class OrderController {
 
   private final OrderService orderService;
 
-  @Operation(summary = "주문하기", requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "주문요청"))
+  @Operation(
+      summary = "주문하기",
+      requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "주문요청"))
   @PreAuthorize("hasRole('CUSTOMER') OR hasAuthority('CUSTOMER')")
   @PostMapping
   public ResponseEntity<Void> createOrder(
@@ -38,5 +40,11 @@ public class OrderController {
   public ResponseEntity<List<OrderResponseDto>> getOrders(@PathVariable String username) {
     return ResponseEntity.ok(orderService.getOrderResponseDtosByCurrentUser(username));
   }
+
+  @Operation(summary = "사용자 본인이 주문한 특정 내역 조회하기")
+  @PreAuthorize("#username == authentication.name")
+  @GetMapping("/{username}/{orderId}")
+  public ResponseEntity<OrderResponseDto> getOrder(@PathVariable String username, @PathVariable Integer orderId) {
+    return ResponseEntity.ok(orderService.getOrderResponseDtoByCurrentUserAndOrderId(username, orderId));
   }
 }
