@@ -22,6 +22,7 @@ import io.jeidiiy.sirenordersystem.user.service.UserService;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -152,5 +153,39 @@ class OrderServiceTest {
     assertThat(result.get(0).orderProductResponseDtos().size()).isEqualTo(3);
     assertThat(result.get(1).orderProductResponseDtos().size()).isEqualTo(2);
     then(orderJpaRepository).should().findAllByUserId(userId);
+  }
+
+  @DisplayName("로그인한 사용자가 본인의 특정 주문 내역을 확인한다.")
+  @Test
+  void givenUsernameAndOrderId_whenRequesting_thenResponse() {
+    // given
+    var currentUsername = "loginUsername";
+    var userId = 1;
+    User user = User.builder().username(currentUsername).build();
+    ReflectionTestUtils.setField(user, "id", userId);
+    Store store = Store.of("storeName", null, "imageUrl", null, null, null, false);
+
+    var orderId = 1;
+    Order order = Order.of(user, store, OrderStatus.COMPLETE);
+    ReflectionTestUtils.setField(order, "id", orderId);
+    ReflectionTestUtils.setField(order, "createdAt", LocalDateTime.now());
+    OrderProduct orderProduct1 =
+            OrderProduct.of(
+                    order, Product.of(1, "아메리카노", null, null, null, null, Category.BEVERAGE), 1);
+    OrderProduct orderProduct2 =
+            OrderProduct.of(order, Product.of(2, "샌드위치", null, null, null, null, Category.FOOD), 1);
+    List<OrderProduct> orderProducts = List.of(orderProduct1, orderProduct2);
+
+    given(userService.getUserByUsername(currentUsername)).willReturn(user);
+    given(orderJpaRepository.findByIdAndUserId(orderId, userId)).willReturn(Optional.of(order));
+    given(orderProductService.findAllByOrderId(order.getId())).willReturn(orderProducts);
+
+    // when
+    OrderResponseDto result = sut.getOrderResponseDtoByCurrentUserAndOrderId(currentUsername, orderId);
+
+    // then
+    assertThat(result.orderId()).isEqualTo(orderId);
+    assertThat(result.orderProductResponseDtos().size()).isEqualTo(2);
+    then(orderJpaRepository).should().findByIdAndUserId(orderId, userId);
   }
 }
