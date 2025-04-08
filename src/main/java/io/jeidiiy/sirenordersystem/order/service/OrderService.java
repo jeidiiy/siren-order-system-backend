@@ -35,12 +35,10 @@ public class OrderService {
     List<Order> orders = orderJpaRepository.findAllByUserId(user.getId());
     List<OrderResponseDto> result = new ArrayList<>();
     for (Order order : orders) {
-      List<String> orderProductNames = new ArrayList<>();
       List<OrderProduct> orderProducts = orderProductService.findAllByOrderId(order.getId());
-      for (OrderProduct orderProduct : orderProducts) {
-        orderProductNames.add(orderProduct.getProduct().getKrName());
-      }
-      result.add(OrderResponseDto.from(order, orderProductNames));
+      List<OrderProductResponseDto> orderProductResponseDtos =
+          orderProducts.stream().map(OrderProductResponseDto::from).toList();
+      result.add(OrderResponseDto.from(order, orderProductResponseDtos));
     }
 
     // 주문일 기준 최신순

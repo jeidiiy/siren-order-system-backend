@@ -149,8 +149,8 @@ class OrderServiceTest {
     // then
     assertThat(result.size()).isEqualTo(2);
     assertThat(result.get(0).orderedDateTime()).isAfter(result.get(1).orderedDateTime());
-    assertThat(result.get(0).orderProductNames().size()).isEqualTo(3);
-    assertThat(result.get(1).orderProductNames().size()).isEqualTo(2);
+    assertThat(result.get(0).orderProductResponseDtos().size()).isEqualTo(3);
+    assertThat(result.get(1).orderProductResponseDtos().size()).isEqualTo(2);
     then(orderJpaRepository).should().findAllByUserId(userId);
   }
 }
