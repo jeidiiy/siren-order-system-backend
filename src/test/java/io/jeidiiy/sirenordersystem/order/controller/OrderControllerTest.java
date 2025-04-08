@@ -87,4 +87,19 @@ class OrderControllerTest {
 
     mvc.perform(get("/api/v1/orders/" + username)).andExpect(status().isOk());
   }
+
+  @DisplayName("[GET] 사용자가 본인이 주문한 특정 내역을 요청 -> 200 OK [성공]")
+  @WithMockCustomUser
+  @Test
+  void givenUsernameAndOrderId_whenRequesting_thenResponds200() throws Exception {
+    // given
+    String username = "loginUsername";
+    Integer orderId = 1;
+
+    given(orderService.getOrderResponseDtoByCurrentUserAndOrderId(username, orderId))
+        .willReturn(new OrderResponseDto(orderId, null, null, null, null, null, null));
+
+    // when & then
+    mvc.perform(get("/api/v1/orders/" + username + "/" + orderId)).andExpect(status().isOk());
+  }
 }
