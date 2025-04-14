@@ -44,9 +44,7 @@ public class CartService {
       }
 
       Cart cart = optionalCart.get();
-      Product product = productService.findById(cartPostRequestDto.productId());
       cart.setQuantity(cartPostRequestDto.quantity());
-      cart.setPrice(product.getBasePrice() * cart.getQuantity());
       cartJpaRepository.save(cart);
     }
 
