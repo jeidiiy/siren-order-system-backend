@@ -15,6 +15,7 @@ public record StoreResponseDto(
     String contactNumber,
     String openAt,
     String closeAt,
+    Boolean isOpen,
     @JsonProperty("pickupOptions") List<PickupOptionResponseDto> pickupOptionsResponseDto) {
   public static StoreResponseDto from(Store store) {
     return StoreResponseDto.builder()
@@ -25,6 +26,7 @@ public record StoreResponseDto(
         .contactNumber(store.getContactNumber())
         .openAt(store.getOpenAt())
         .closeAt(store.getCloseAt())
+        .isOpen(store.getIsOpen())
         .pickupOptionsResponseDto(
             store.getStorePickupOptions().stream()
                 .map(StorePickupOption::getPickupOption)
