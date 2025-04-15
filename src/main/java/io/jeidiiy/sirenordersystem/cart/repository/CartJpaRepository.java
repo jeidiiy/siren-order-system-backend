@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 public interface CartJpaRepository extends JpaRepository<Cart, Integer> {
+  @Query("SELECT DISTINCT c FROM Cart c JOIN FETCH c.product WHERE c.user.id = :userId")
   List<Cart> findAllByUserId(Integer userId);
 
   @Modifying
