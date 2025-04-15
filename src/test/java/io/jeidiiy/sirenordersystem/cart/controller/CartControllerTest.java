@@ -63,7 +63,7 @@ class CartControllerTest {
     List<CartResponseDto> expected =
         List.of(CartResponseDto.fromEntity(cart1), CartResponseDto.fromEntity(cart2));
 
-    given(cartService.findByUsername(username)).willReturn(expected);
+    given(cartService.findAllByUsername(username)).willReturn(expected);
 
     // when & then
     mvc.perform(get("/api/v1/carts/" + username))

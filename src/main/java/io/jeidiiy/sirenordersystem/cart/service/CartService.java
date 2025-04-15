@@ -25,7 +25,7 @@ public class CartService {
   private final ProductService productService;
 
   @Transactional(readOnly = true)
-  public List<CartResponseDto> findByUsername(String username) {
+  public List<CartResponseDto> findAllByUsername(String username) {
     User user = userService.getUserByUsername(username);
     List<Cart> carts = cartJpaRepository.findAllByUserId(user.getId());
     return carts.stream().map(CartResponseDto::fromEntity).toList();
@@ -48,17 +48,17 @@ public class CartService {
       cartJpaRepository.save(cart);
     }
 
-    return findByUsername(username);
+    return findAllByUsername(username);
   }
 
   public List<CartResponseDto> remove(String username, Integer cartId) {
     cartJpaRepository.deleteById(cartId);
-    return findByUsername(username);
+    return findAllByUsername(username);
   }
 
   public List<CartResponseDto> removeAll(String username) {
     User user = userService.getUserByUsername(username);
     cartJpaRepository.deleteAllByUserId(user.getId());
-    return findByUsername(username);
+    return findAllByUsername(username);
   }
 }
