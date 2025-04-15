@@ -59,7 +59,7 @@ class CartServiceTest {
     given(cartJpaRepository.findAllByUserId(userId)).willReturn(carts);
 
     // when
-    List<CartResponseDto> result = sut.findByUsername(username);
+    List<CartResponseDto> result = sut.findAllByUsername(username);
 
     // then
     assertThat(result).hasSize(2);
@@ -89,7 +89,7 @@ class CartServiceTest {
     given(userService.getUserByUsername(username)).willReturn(user);
     given(productService.findById(productId)).willReturn(mug);
     given(cartJpaRepository.save(cart1)).willReturn(cart1);
-    given(sut.findByUsername(username)).willReturn(expectedResponseList);
+    given(sut.findAllByUsername(username)).willReturn(expectedResponseList);
     given(cartJpaRepository.findAllByUserId(userId)).willReturn(List.of(cart1));
 
     // when
@@ -141,7 +141,7 @@ class CartServiceTest {
     given(userService.getUserByUsername(username)).willReturn(user);
     given(cartJpaRepository.findById(cart1Id)).willReturn(Optional.of(cart1));
     given(productService.findById(americano.getId())).willReturn(americano);
-    given(sut.findByUsername(username)).willReturn(expectedResponseList);
+    given(sut.findAllByUsername(username)).willReturn(expectedResponseList);
     given(cartJpaRepository.findAllByUserId(userId)).willReturn(List.of(cart1, cart2));
 
     // when
@@ -182,7 +182,7 @@ class CartServiceTest {
 
     willDoNothing().given(cartJpaRepository).deleteById(cart1Id);
     given(userService.getUserByUsername(username)).willReturn(user);
-    given(sut.findByUsername(username)).willReturn(expectedResponseList);
+    given(sut.findAllByUsername(username)).willReturn(expectedResponseList);
     given(cartJpaRepository.findAllByUserId(userId)).willReturn(List.of(cart2));
 
     // when
@@ -215,7 +215,7 @@ class CartServiceTest {
 
     given(userService.getUserByUsername(username)).willReturn(user);
     willDoNothing().given(cartJpaRepository).deleteAllByUserId(userId);
-    given(sut.findByUsername(username)).willReturn(List.of());
+    given(sut.findAllByUsername(username)).willReturn(List.of());
 
     // when
     List<CartResponseDto> result = sut.removeAll(username);

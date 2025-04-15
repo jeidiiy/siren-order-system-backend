@@ -23,7 +23,7 @@ public class CartController {
   @PreAuthorize("#username == authentication.name")
   @GetMapping("/{username}")
   public ResponseEntity<List<CartResponseDto>> get(@PathVariable String username) {
-    return ResponseEntity.ok(cartService.findByUsername(username));
+    return ResponseEntity.ok(cartService.findAllByUsername(username));
   }
 
   @Operation(summary = "특정 사용자의 장바구니 변경하기")

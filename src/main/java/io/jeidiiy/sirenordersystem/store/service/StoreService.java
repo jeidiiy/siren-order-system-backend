@@ -20,7 +20,7 @@ public class StoreService {
 
   @Transactional(readOnly = true)
   public List<StoreResponseDto> findStores() {
-    return storeJpaRepository.findAll().stream()
+    return storeJpaRepository.findAllWithPickupOptions().stream()
         .map(StoreResponseDto::from)
         .collect(Collectors.toList());
   }
@@ -33,7 +33,7 @@ public class StoreService {
   @Transactional(readOnly = true)
   public Store findById(Integer storeId) {
     return storeJpaRepository
-        .findById(storeId)
+        .findByIdWithPickupOptions(storeId)
         .orElseThrow(() -> new StoreNotFoundException(storeId));
   }
 
