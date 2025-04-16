@@ -5,6 +5,7 @@ import static org.assertj.core.api.BDDAssertions.catchThrowable;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 
+import io.jeidiiy.sirenordersystem.exception.ErrorCode;
 import io.jeidiiy.sirenordersystem.store.domain.Store;
 import io.jeidiiy.sirenordersystem.store.exception.StoreNotFoundException;
 import io.jeidiiy.sirenordersystem.store.repository.StoreJpaRepository;
@@ -41,13 +42,13 @@ class StoreServiceTest {
   @Test
   void givenNothing_whenFinding_thenReturnStores() {
     // given
-    given(storeJpaRepository.findAll()).willReturn(stores);
+    given(storeJpaRepository.findAllWithPickupOptions()).willReturn(stores);
 
     // when
     sut.findStores();
 
     // then
-    then(storeJpaRepository).should().findAll();
+    then(storeJpaRepository).should().findAllWithPickupOptions();
   }
 
   @DisplayName("특정 매장을 조회한다.")
@@ -57,13 +58,13 @@ class StoreServiceTest {
     Integer storeId = 1;
     Store store = stores.get(storeId);
     ReflectionTestUtils.setField(store, "id", storeId);
-    given(storeJpaRepository.findById(storeId)).willReturn(Optional.of(store));
+    given(storeJpaRepository.findByIdWithPickupOptions(storeId)).willReturn(Optional.of(store));
 
     // when
     sut.findStoreById(storeId);
 
     // then
-    then(storeJpaRepository).should().findById(storeId);
+    then(storeJpaRepository).should().findByIdWithPickupOptions(storeId);
   }
 
   @DisplayName("특정 매장 조회 시 매장이 존재하지 않으면 예외를 발생시킨다.")
@@ -71,7 +72,7 @@ class StoreServiceTest {
   void givenNonExistsStoreId_whenFinding_thenThrowsStoreNotFoundException() {
     // given
     Integer nonExistsStoreId = 9999;
-    given(storeJpaRepository.findById(nonExistsStoreId)).willReturn(Optional.empty());
+    given(storeJpaRepository.findByIdWithPickupOptions(nonExistsStoreId)).willReturn(Optional.empty());
 
     // when
     Throwable t = catchThrowable(() -> sut.findStoreById(nonExistsStoreId));
@@ -79,7 +80,7 @@ class StoreServiceTest {
     // then
     assertThat(t)
         .isInstanceOf(StoreNotFoundException.class)
-        .hasMessageContaining("매장을 찾지 못했습니다. storeId: " + nonExistsStoreId);
-    then(storeJpaRepository).should().findById(nonExistsStoreId);
+        .hasMessageContaining(ErrorCode.STORE_NOT_FOUND.getMessage());
+    then(storeJpaRepository).should().findByIdWithPickupOptions(nonExistsStoreId);
   }
 }

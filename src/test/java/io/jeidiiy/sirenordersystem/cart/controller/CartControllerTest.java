@@ -91,7 +91,8 @@ class CartControllerTest {
 
     int updatedQuantity = cart1.getQuantity() + 1;
     CartResponseDto expectedCartResponse =
-        new CartResponseDto(cart1Id, updatedQuantity, cart1.getPrice(), americano.getKrName());
+        new CartResponseDto(
+            cart1Id, americano.getId(), updatedQuantity, cart1.getPrice(), americano.getKrName());
     List<CartResponseDto> expectedResponse = List.of(expectedCartResponse);
 
     given(cartService.upsert(username, requestDto)).willReturn(expectedResponse);
@@ -125,7 +126,7 @@ class CartControllerTest {
     CartPostRequestDto requestDto = new CartPostRequestDto(null, americano.getId(), null);
 
     CartResponseDto expectedCartResponse =
-        new CartResponseDto(cart1Id, 1, cart1.getPrice(), americano.getKrName());
+        new CartResponseDto(cart1Id, 1, 1, cart1.getPrice(), americano.getKrName());
     List<CartResponseDto> expectedResponse = List.of(expectedCartResponse);
 
     given(cartService.upsert(username, requestDto)).willReturn(expectedResponse);
