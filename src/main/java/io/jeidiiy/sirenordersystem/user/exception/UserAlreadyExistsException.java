@@ -1,14 +1,11 @@
 package io.jeidiiy.sirenordersystem.user.exception;
 
-import io.jeidiiy.sirenordersystem.exception.ClientErrorException;
+import io.jeidiiy.sirenordersystem.exception.BusinessException;
+import io.jeidiiy.sirenordersystem.exception.ErrorCode;
 import org.springframework.http.HttpStatus;
 
-public class UserAlreadyExistsException extends ClientErrorException {
-  public UserAlreadyExistsException() {
-    super(HttpStatus.CONFLICT, "User already exists");
-  }
-
-  public UserAlreadyExistsException(String message) {
-    super(HttpStatus.CONFLICT, message);
+public class UserAlreadyExistsException extends BusinessException {
+  public UserAlreadyExistsException(ErrorCode errorCode) {
+    super(errorCode);
   }
 }

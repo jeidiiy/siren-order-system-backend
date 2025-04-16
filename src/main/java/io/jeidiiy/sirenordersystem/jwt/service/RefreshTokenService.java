@@ -1,5 +1,6 @@
 package io.jeidiiy.sirenordersystem.jwt.service;
 
+import io.jeidiiy.sirenordersystem.exception.ErrorCode;
 import io.jeidiiy.sirenordersystem.jwt.exception.ExpiredRefreshTokenException;
 import io.jeidiiy.sirenordersystem.jwt.exception.RefreshTokenNotFoundException;
 import io.jeidiiy.sirenordersystem.jwt.exception.ValidAccessTokenException;
@@ -31,19 +32,19 @@ public class RefreshTokenService {
     // 1. Access Token 이 유효한지 확인. 유효하면 예외 발생
     // accessToken 이 비어있다면 스토어 상태 초기화로 인한 요청으로 간주하고 패스
     if (!accessToken.isEmpty() && jwtService.validateToken(accessToken)) {
-      throw new ValidAccessTokenException("액세스 토큰이 유효합니다. 새로운 액세스 토큰을 발급할 수 없습니다.");
+      throw new ValidAccessTokenException(ErrorCode.REFRESH_TOKEN_VALID_ACCESS_TOKEN);
     }
 
     // 2. DB 에서 Refresh Token 조회
     RefreshToken storedToken =
         refreshTokenJpaRepository
             .findByToken(refreshToken)
-            .orElseThrow(() -> new RefreshTokenNotFoundException("유효하지 않은 리프레시 토큰입니다."));
+            .orElseThrow(() -> new RefreshTokenNotFoundException(ErrorCode.REFRESH_TOKEN_NOT_FOUND));
 
     // 3. Refresh Token 만료 체크
     if (jwtService.getExpiration(storedToken.getToken()).before(new Date())) {
       refreshTokenJpaRepository.delete(storedToken); // 만료된 토큰 삭제
-      throw new ExpiredRefreshTokenException("리프레시 토큰이 만료되었습니다. 다시 로그인해 주세요.");
+      throw new ExpiredRefreshTokenException(ErrorCode.REFRESH_TOKEN_IS_EXPIRED);
     }
 
     // 4. 유저 정보 가져오기

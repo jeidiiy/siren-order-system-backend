@@ -1,5 +1,6 @@
 package io.jeidiiy.sirenordersystem.order.service;
 
+import io.jeidiiy.sirenordersystem.exception.ErrorCode;
 import io.jeidiiy.sirenordersystem.order.domain.Order;
 import io.jeidiiy.sirenordersystem.order.domain.OrderProduct;
 import io.jeidiiy.sirenordersystem.order.domain.OrderStatus;
@@ -37,7 +38,7 @@ public class OrderService {
     Order order =
         orderJpaRepository
             .findByIdAndUserId(orderId, user.getId())
-            .orElseThrow(() -> new NonExistOrderException("ID에 해당하는 주문이 없습니다: " + orderId));
+            .orElseThrow(() -> new NonExistOrderException(ErrorCode.ORDER_NOT_FOUND));
 
     List<OrderProduct> orderProducts = orderProductService.findAllByOrderId(order.getId());
     List<OrderProductResponseDto> orderProductResponseDtos =
@@ -65,7 +66,7 @@ public class OrderService {
 
   public void createOrder(OrderPostRequestBody requestBody, String currentUsername) {
     if (requestBody.orderProductDtos().isEmpty()) {
-      throw new NonExistOrderProductException("주문된 상품이 없습니다");
+      throw new NonExistOrderProductException(ErrorCode.ORDER_PRODUCT_IS_EMPTY);
     }
 
     User user = userService.getUserByUsername(currentUsername);

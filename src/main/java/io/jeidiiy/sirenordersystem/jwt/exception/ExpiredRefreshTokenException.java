@@ -1,7 +1,10 @@
 package io.jeidiiy.sirenordersystem.jwt.exception;
 
-public class ExpiredRefreshTokenException extends RuntimeException {
-  public ExpiredRefreshTokenException(String message) {
-    super(message);
+import io.jeidiiy.sirenordersystem.exception.BusinessException;
+import io.jeidiiy.sirenordersystem.exception.ErrorCode;
+
+public class ExpiredRefreshTokenException extends BusinessException {
+  public ExpiredRefreshTokenException(ErrorCode errorCode) {
+    super(errorCode);
   }
 }

@@ -1,10 +1,10 @@
 package io.jeidiiy.sirenordersystem.jwt.exception;
 
-import io.jeidiiy.sirenordersystem.exception.ClientErrorException;
-import org.springframework.http.HttpStatus;
+import io.jeidiiy.sirenordersystem.exception.BusinessException;
+import io.jeidiiy.sirenordersystem.exception.ErrorCode;
 
-public class RefreshTokenNotSetException extends ClientErrorException {
-  public RefreshTokenNotSetException(String message) {
-    super(HttpStatus.UNAUTHORIZED, message);
+public class RefreshTokenNotSetException extends BusinessException {
+  public RefreshTokenNotSetException(ErrorCode errorCode) {
+    super(errorCode);
   }
 }

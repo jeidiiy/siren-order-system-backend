@@ -3,7 +3,6 @@ package io.jeidiiy.sirenordersystem.exception;
 import io.jeidiiy.sirenordersystem.jwt.exception.RefreshTokenNotSetException;
 import io.jeidiiy.sirenordersystem.user.exception.UserAlreadyExistsException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authorization.AuthorizationDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,38 +15,47 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(RefreshTokenNotSetException.class)
   public ResponseEntity<ErrorResponse> handleRefreshTokenNotSetException(
       RefreshTokenNotSetException e) {
-    return new ResponseEntity<>(new ErrorResponse(e.getStatus(), e.getMessage()), e.getStatus());
+    ErrorCode errorCode = e.getErrorCode();
+    return new ResponseEntity<>(
+        new ErrorResponse(errorCode.getCode(), errorCode.getMessage()), errorCode.getStatus());
   }
 
-  @ExceptionHandler(ClientErrorException.class)
-  public ResponseEntity<ErrorResponse> handleClientErrorException(ClientErrorException e) {
-    return new ResponseEntity<>(new ErrorResponse(e.getStatus(), e.getMessage()), e.getStatus());
+  @ExceptionHandler(BusinessException.class)
+  public ResponseEntity<ErrorResponse> handleBusinessException(BusinessException e) {
+    ErrorCode errorCode = e.getErrorCode();
+    return new ResponseEntity<>(
+        new ErrorResponse(errorCode.getCode(), errorCode.getMessage()), errorCode.getStatus());
   }
 
   @ExceptionHandler(IllegalArgumentException.class)
   public ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException e) {
+    ErrorCode errorCode = ErrorCode.ILLEGAL_ARGUMENT;
     return new ResponseEntity<>(
-        new ErrorResponse(HttpStatus.BAD_REQUEST, e.getMessage()), HttpStatus.BAD_REQUEST);
+        new ErrorResponse(errorCode.getCode(), e.getMessage()), errorCode.getStatus());
   }
 
   @ExceptionHandler(UserAlreadyExistsException.class)
   public ResponseEntity<ErrorResponse> handleUserAlreadyExistsException(
       UserAlreadyExistsException e) {
-    return new ResponseEntity<>(new ErrorResponse(e.getStatus(), e.getMessage()), e.getStatus());
+    ErrorCode errorCode = e.getErrorCode();
+    return new ResponseEntity<>(
+        new ErrorResponse(errorCode.getCode(), errorCode.getMessage()), errorCode.getStatus());
   }
 
   @ExceptionHandler(UsernameNotFoundException.class)
   public ResponseEntity<ErrorResponse> handleUsernameNotFoundException(
       UsernameNotFoundException e) {
+    ErrorCode errorCode = ErrorCode.USER_NOT_FOUND;
     return new ResponseEntity<>(
-        new ErrorResponse(HttpStatus.NOT_FOUND, e.getMessage()), HttpStatus.NOT_FOUND);
+        new ErrorResponse(errorCode.getCode(), errorCode.getMessage()), errorCode.getStatus());
   }
 
   @ExceptionHandler(AuthorizationDeniedException.class)
   public ResponseEntity<ErrorResponse> handleAuthorizationDeniedException(
       AuthorizationDeniedException e) {
+    ErrorCode errorCode = ErrorCode.USER_FORBIDDEN;
     return new ResponseEntity<>(
-        new ErrorResponse(HttpStatus.FORBIDDEN, "권한이 없습니다."), HttpStatus.FORBIDDEN);
+        new ErrorResponse(errorCode.getCode(), errorCode.getMessage()), errorCode.getStatus());
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -58,8 +66,9 @@ public class GlobalExceptionHandler {
             .map(DefaultMessageSourceResolvable::getDefaultMessage)
             .toList()
             .toString();
+    ErrorCode errorCode = ErrorCode.INVALID_INPUT_VALUE;
     return new ResponseEntity<>(
-        new ErrorResponse(HttpStatus.BAD_REQUEST, errorMessage), HttpStatus.BAD_REQUEST);
+        new ErrorResponse(errorCode.getCode(), errorMessage), errorCode.getStatus());
   }
 
   @ExceptionHandler(RuntimeException.class)

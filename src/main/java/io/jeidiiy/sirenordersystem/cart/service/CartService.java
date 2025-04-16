@@ -5,6 +5,7 @@ import io.jeidiiy.sirenordersystem.cart.domain.dto.CartPostRequestDto;
 import io.jeidiiy.sirenordersystem.cart.domain.dto.CartResponseDto;
 import io.jeidiiy.sirenordersystem.cart.exception.NonExistCartException;
 import io.jeidiiy.sirenordersystem.cart.repository.CartJpaRepository;
+import io.jeidiiy.sirenordersystem.exception.ErrorCode;
 import io.jeidiiy.sirenordersystem.product.domain.Product;
 import io.jeidiiy.sirenordersystem.product.service.ProductService;
 import io.jeidiiy.sirenordersystem.user.domain.User;
@@ -40,7 +41,7 @@ public class CartService {
       Optional<Cart> optionalCart = cartJpaRepository.findById(cartPostRequestDto.cartId());
 
       if (optionalCart.isEmpty()) {
-        throw new NonExistCartException("ID에 해당하는 장바구니가 없습니다. ID: " + cartPostRequestDto.cartId());
+        throw new NonExistCartException(ErrorCode.CART_NOT_FOUND);
       }
 
       Cart cart = optionalCart.get();

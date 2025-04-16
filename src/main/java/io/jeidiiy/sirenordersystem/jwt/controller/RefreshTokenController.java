@@ -2,6 +2,7 @@ package io.jeidiiy.sirenordersystem.jwt.controller;
 
 import static io.jeidiiy.sirenordersystem.jwt.filter.JwtAuthenticationFilter.BEARER_PREFIX;
 
+import io.jeidiiy.sirenordersystem.exception.ErrorCode;
 import io.jeidiiy.sirenordersystem.jwt.exception.RefreshTokenNotSetException;
 import io.jeidiiy.sirenordersystem.jwt.service.RefreshTokenService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,7 +34,7 @@ public class RefreshTokenController {
       @CookieValue(value = "refreshToken", required = false) Cookie refreshTokenCookie) {
     // 로그인을 한 번이라도 했다면 Refresh Token 쿠키가 세팅되어 있어야 함.
     if (refreshTokenCookie == null) {
-      throw new RefreshTokenNotSetException("쿠키에 리프레시 토큰이 없습니다.");
+      throw new RefreshTokenNotSetException(ErrorCode.REFRESH_TOKEN_NOT_FOUND_IN_COOKIE);
     }
 
     // 로그인한 적이 없거나

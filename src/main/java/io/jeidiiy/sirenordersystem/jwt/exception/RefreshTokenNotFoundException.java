@@ -1,7 +1,10 @@
 package io.jeidiiy.sirenordersystem.jwt.exception;
 
-public class RefreshTokenNotFoundException extends RuntimeException {
-  public RefreshTokenNotFoundException(String message) {
-    super(message);
+import io.jeidiiy.sirenordersystem.exception.BusinessException;
+import io.jeidiiy.sirenordersystem.exception.ErrorCode;
+
+public class RefreshTokenNotFoundException extends BusinessException {
+  public RefreshTokenNotFoundException(ErrorCode errorCode) {
+    super(errorCode);
   }
 }

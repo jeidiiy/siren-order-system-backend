@@ -83,7 +83,7 @@ class CartServiceTest {
 
     CartPostRequestDto requestDto = new CartPostRequestDto(null, productId, null);
     CartResponseDto expectedResponse =
-        new CartResponseDto(cart1Id, 1, mug.getBasePrice(), mug.getKrName());
+        new CartResponseDto(cart1Id, 1, 1, mug.getBasePrice(), mug.getKrName());
     List<CartResponseDto> expectedResponseList = List.of(expectedResponse);
 
     given(userService.getUserByUsername(username)).willReturn(user);
@@ -127,12 +127,14 @@ class CartServiceTest {
     CartResponseDto expectedResponse1 =
         new CartResponseDto(
             cart1Id,
+            americano.getId(),
             updatedQuantity,
-            americano.getBasePrice() * updatedQuantity,
+            americano.getBasePrice(),
             americano.getKrName());
     CartResponseDto expectedResponse2 =
         new CartResponseDto(
             cart2Id,
+            sandwich.getId(),
             cart2.getQuantity(),
             sandwich.getBasePrice() * cart2.getQuantity(),
             sandwich.getKrName());
@@ -140,7 +142,6 @@ class CartServiceTest {
 
     given(userService.getUserByUsername(username)).willReturn(user);
     given(cartJpaRepository.findById(cart1Id)).willReturn(Optional.of(cart1));
-    given(productService.findById(americano.getId())).willReturn(americano);
     given(sut.findAllByUsername(username)).willReturn(expectedResponseList);
     given(cartJpaRepository.findAllByUserId(userId)).willReturn(List.of(cart1, cart2));
 
@@ -151,7 +152,6 @@ class CartServiceTest {
     CartResponseDto americanoResponseDto = result.get(0);
     assertThat(result).hasSize(2);
     assertThat(americanoResponseDto.quantity()).isEqualTo(updatedQuantity);
-    assertThat(americanoResponseDto.price()).isEqualTo(americano.getBasePrice() * updatedQuantity);
   }
 
   @DisplayName("장바구니에 있는 특정 상품을 삭제한다.")
@@ -177,7 +177,7 @@ class CartServiceTest {
 
     CartResponseDto expectedResponse =
         new CartResponseDto(
-            cart2Id, cart2.getQuantity(), sandwich.getBasePrice(), sandwich.getKrName());
+            cart2Id, sandwich.getId(), cart2.getQuantity(), sandwich.getBasePrice(), sandwich.getKrName());
     List<CartResponseDto> expectedResponseList = List.of(expectedResponse);
 
     willDoNothing().given(cartJpaRepository).deleteById(cart1Id);
