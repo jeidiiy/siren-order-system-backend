@@ -6,6 +6,8 @@ import io.jeidiiy.sirenordersystem.cart.service.CartService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
+
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -30,7 +32,7 @@ public class CartController {
   @PreAuthorize("#username == authentication.name")
   @PostMapping("/{username}")
   public ResponseEntity<List<CartResponseDto>> upsert(
-      @PathVariable String username, @RequestBody CartPostRequestDto cartPostRequestDto) {
+      @PathVariable String username, @Valid @RequestBody CartPostRequestDto cartPostRequestDto) {
     return ResponseEntity.ok(cartService.upsert(username, cartPostRequestDto));
   }
 

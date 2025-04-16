@@ -1,3 +1,5 @@
 package io.jeidiiy.sirenordersystem.cart.domain.dto;
 
-public record CartPostRequestDto(Integer cartId, Integer productId, Integer quantity) {}
+import jakarta.validation.constraints.NotNull;
+
+public record CartPostRequestDto(Integer cartId, @NotNull Integer productId, Integer quantity) {}
