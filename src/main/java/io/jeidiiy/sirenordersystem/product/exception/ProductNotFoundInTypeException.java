@@ -2,10 +2,9 @@ package io.jeidiiy.sirenordersystem.product.exception;
 
 import io.jeidiiy.sirenordersystem.exception.BusinessException;
 import io.jeidiiy.sirenordersystem.exception.ErrorCode;
-import org.springframework.http.HttpStatus;
 
-public class ProductNotFoundException extends BusinessException {
-  public ProductNotFoundException(ErrorCode errorCode) {
+public class ProductNotFoundInTypeException extends BusinessException {
+  public ProductNotFoundInTypeException(ErrorCode errorCode) {
     super(errorCode);
   }
 }

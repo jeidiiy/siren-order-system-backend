@@ -1,5 +1,6 @@
 package io.jeidiiy.sirenordersystem.store.service;
 
+import io.jeidiiy.sirenordersystem.exception.ErrorCode;
 import io.jeidiiy.sirenordersystem.store.domain.Store;
 import io.jeidiiy.sirenordersystem.store.domain.dto.StorePutRequestBody;
 import io.jeidiiy.sirenordersystem.store.domain.dto.StoreResponseDto;
@@ -10,6 +11,8 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import static io.jeidiiy.sirenordersystem.exception.ErrorCode.STORE_NOT_FOUND_WITH_USERNAME;
 
 @RequiredArgsConstructor
 @Transactional
@@ -34,7 +37,7 @@ public class StoreService {
   public Store findById(Integer storeId) {
     return storeJpaRepository
         .findByIdWithPickupOptions(storeId)
-        .orElseThrow(() -> new StoreNotFoundException(storeId));
+        .orElseThrow(() -> new StoreNotFoundException(ErrorCode.STORE_NOT_FOUND));
   }
 
   public void toggleStoreIsOpenByStoreIdAndLoginUserUsername(
@@ -48,7 +51,7 @@ public class StoreService {
   public Store findStoreByStoreIdAndUserUsername(Integer storeId, String currentUserUsername) {
     return storeJpaRepository
         .findByIdAndUserUsername(storeId, currentUserUsername)
-        .orElseThrow(() -> new StoreNotFoundException(storeId, currentUserUsername));
+        .orElseThrow(() -> new StoreNotFoundException(STORE_NOT_FOUND_WITH_USERNAME));
   }
 
   public void updateStoreByStoreIdAndLoginUserUsername(

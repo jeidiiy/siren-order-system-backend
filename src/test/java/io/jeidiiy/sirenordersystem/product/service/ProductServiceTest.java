@@ -1,5 +1,6 @@
 package io.jeidiiy.sirenordersystem.product.service;
 
+import static io.jeidiiy.sirenordersystem.exception.ErrorCode.PRODUCT_NOT_FOUND_IN_TYPE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.BDDAssertions.catchThrowable;
 import static org.mockito.BDDMockito.*;
@@ -9,6 +10,7 @@ import io.jeidiiy.sirenordersystem.product.domain.Product;
 import io.jeidiiy.sirenordersystem.product.domain.ProductType;
 import io.jeidiiy.sirenordersystem.product.domain.Type;
 import io.jeidiiy.sirenordersystem.product.domain.dto.ProductResponseDto;
+import io.jeidiiy.sirenordersystem.product.exception.ProductNotFoundInTypeException;
 import io.jeidiiy.sirenordersystem.product.repository.ProductJpaRepository;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -90,8 +92,8 @@ class ProductServiceTest {
 
     // then
     assertThat(t)
-        .isInstanceOf(IllegalArgumentException.class)
-        .hasMessageContaining("해당 종류에 해당하는 상품은 없습니다. Type Id : " + nonExistsTypeId);
+        .isInstanceOf(ProductNotFoundInTypeException.class)
+        .hasMessageContaining(PRODUCT_NOT_FOUND_IN_TYPE.getMessage());
     then(productJpaRepository).should().findAllByTypeProductsTypeId(nonExistsTypeId);
   }
 }

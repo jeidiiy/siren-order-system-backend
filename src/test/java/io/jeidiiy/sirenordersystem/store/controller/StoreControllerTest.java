@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jeidiiy.sirenordersystem.config.SecurityConfig;
+import io.jeidiiy.sirenordersystem.exception.ErrorCode;
 import io.jeidiiy.sirenordersystem.jwt.model.JwtToken;
 import io.jeidiiy.sirenordersystem.jwt.service.JwtAuthenticationEntryPoint;
 import io.jeidiiy.sirenordersystem.jwt.service.JwtLogoutSuccessHandler;
@@ -88,7 +89,7 @@ class StoreControllerTest {
   void givenNonExistsStoreId_whenRequesting_thenReturns404() throws Exception {
     // given
     Integer nonExistsStoreId = 9999;
-    willThrow(new StoreNotFoundException(nonExistsStoreId))
+    willThrow(new StoreNotFoundException(ErrorCode.STORE_NOT_FOUND))
         .given(storeService)
         .findStoreById(nonExistsStoreId);
 
@@ -137,7 +138,7 @@ class StoreControllerTest {
     ReflectionTestUtils.setField(store, "user", admin);
     JwtToken jwtToken = jwtService.generateJwtToken(loginUsername);
 
-    willThrow(new StoreNotFoundException(storeId, loginUsername))
+    willThrow(new StoreNotFoundException(ErrorCode.STORE_NOT_FOUND_WITH_USERNAME))
         .given(storeService)
         .toggleStoreIsOpenByStoreIdAndLoginUserUsername(storeId, loginUsername);
 
@@ -214,7 +215,7 @@ class StoreControllerTest {
             .closeAt("18:00")
             .isOpen(true)
             .build();
-    willThrow(new StoreNotFoundException(storeId, username))
+    willThrow(new StoreNotFoundException(ErrorCode.STORE_NOT_FOUND_WITH_USERNAME))
         .given(storeService)
         .updateStoreByStoreIdAndLoginUserUsername(requestBody, storeId, username);
 

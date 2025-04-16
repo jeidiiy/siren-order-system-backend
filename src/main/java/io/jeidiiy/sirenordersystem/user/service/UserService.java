@@ -1,5 +1,6 @@
 package io.jeidiiy.sirenordersystem.user.service;
 
+import io.jeidiiy.sirenordersystem.exception.ErrorCode;
 import io.jeidiiy.sirenordersystem.jwt.model.JwtToken;
 import io.jeidiiy.sirenordersystem.jwt.model.RefreshToken;
 import io.jeidiiy.sirenordersystem.jwt.service.JwtService;
@@ -31,7 +32,7 @@ public class UserService implements UserDetailsService {
 
   public void signUp(UserPostRequestBody userPostRequestBody) {
     if (userJpaRepository.findByUsername(userPostRequestBody.getUsername()).isPresent()) {
-      throw new UserAlreadyExistsException("이미 존재하는 사용자입니다.");
+      throw new UserAlreadyExistsException(ErrorCode.USER_ALREADY_EXIST);
     }
 
     User newUser = userPostRequestBody.toEntity();
@@ -52,7 +53,7 @@ public class UserService implements UserDetailsService {
       String username, UserPasswordPatchRequestBody userPasswordPatchRequestBody) {
     User user = getUserByUsername(username);
     if (!passwordEncoder.matches(userPasswordPatchRequestBody.oldPassword(), user.getPassword())) {
-      throw new PasswordNotMatchException("비밀번호가 일치하지 않습니다");
+      throw new PasswordNotMatchException(ErrorCode.USER_CONFLICT_PASSWORD);
     }
     user.setPassword(passwordEncoder.encode(userPasswordPatchRequestBody.newPassword()));
     userJpaRepository.save(user);
